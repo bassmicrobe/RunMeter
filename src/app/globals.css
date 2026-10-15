@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Geist", "Hiragino Sans", "Yu Gothic UI", "Meiryo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-heading: "Geist", "Hiragino Sans", "Yu Gothic UI", "Meiryo", ui-sans-serif, system-ui, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #101215;
+  --foreground: #eceeef;
+  --card: #15181c;
+  --card-foreground: #eceeef;
+  --popover: #1b1f24;
+  --popover-foreground: #eceeef;
+  --primary: #82aaa2;
+  --primary-foreground: #0d1b18;
+  --secondary: #1b1e23;
+  --secondary-foreground: #e3e5e7;
+  --muted: #191c20;
+  --muted-foreground: #9ba1a9;
+  --accent: #20242a;
+  --accent-foreground: #f1f3f3;
+  --destructive: #d57b86;
+  --border: #2b3036;
+  --input: #7f8b9a;
+  --ring: #8fb5ad;
+  --chart-1: #82aaa2;
+  --chart-2: #858d98;
+  --chart-3: #b89b72;
+  --chart-4: #7e9bb4;
+  --chart-5: #a8868a;
+  --radius: 0.5rem;
+  --sidebar: #121418;
+  --sidebar-foreground: #d9dcdf;
+  --sidebar-primary: #82aaa2;
+  --sidebar-primary-foreground: #0d1b18;
+  --sidebar-accent: #1b1e23;
+  --sidebar-accent-foreground: #eceeef;
+  --sidebar-border: #2b3036;
+  --sidebar-ring: #8fb5ad;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv02", "cv03", "cv04";
+  }
+  html {
+    @apply font-sans;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+@layer utilities {
+  .metric-number {
+    @apply tabular-nums tracking-tight;
+  }
+
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 28%, transparent);
+  color: var(--foreground);
+}
+
+* {
+  scrollbar-color: #343c48 transparent;
+  scrollbar-width: thin;
+}
+
+@media (pointer: coarse) {
+  [data-slot="button"],
+  [data-slot="select-trigger"],
+  [data-slot="sidebar-menu-button"],
+  [data-slot="command-item"] {
+    min-height: 2.75rem;
+  }
+
+  [data-slot="button"][data-size^="icon"] {
+    min-width: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "runmeter",
+  "productName": "RunMeter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CodexとClaudeの利用率・リセット日時を端末内で確認するRunMeterデスクトップアプリ",
+  "author": {
+    "name": "サイバーアイ・テクノロジー株式会社",
+    "url": "https://cybereye-tech.jp/"
+  },
+  "main": "dist/main/index.js",
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && npm run build:main && npm run build:bridge",
+    "build:main": "ncc build main.ts -o dist/main -m -e electron",
+    "build:bridge": "ncc build bridge.ts -o dist/bridge -m && node scripts/prepare-bridge-runtime.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test tests/*.test.ts",
+    "verify:bridge": "node scripts/verify-bridge.mjs",
+    "verify:desktop": "node scripts/verify-desktop.mjs",
+    "start": "npm run build && electron-forge start",
+    "package": "npm run typecheck && npm run build && electron-forge package --platform=win32 --arch=x64",
+    "make": "npm run typecheck && npm run build && electron-forge make --platform=win32 --arch=x64"
+  },
+  "config": {
+    "forge": "./forge.config.cjs"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "7.11.2",
+    "@electron-forge/maker-squirrel": "7.11.2",
+    "@electron-forge/plugin-fuses": "7.11.2",
+    "@electron/fuses": "1.8.0",
+    "@types/node": "^24.10.0",
+    "@vercel/ncc": "0.45.0",
+    "electron": "43.7.5",
+    "electron-squirrel-startup": "1.0.1",
+    "node-win-x64": "24.21.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
+  },
+  "overrides": {
+    "extract-zip": "npm:@electron-internal/extract-zip@1.0.5",
+    "tar": "7.5.22",
+    "tmp": "0.2.7"
+  }
+}

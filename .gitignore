@@ -1,0 +1,74 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/work/
+/.public-release/
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/desktop/dist
+/desktop/out
+
+# misc
+.DS_Store
+*.pem
+*.pfx
+*.p12
+*.key
+*.keystore
+*.jks
+*.p8
+
+# local credentials, browser profiles, and usage data
+.auth/
+.codex/
+.claude/
+.gemini/
+.runmeter/
+auth.json
+credentials.json
+credentials.*.json
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3-shm
+*.sqlite3-wal
+*.db
+*.db-shm
+*.db-wal
+.npmrc
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
