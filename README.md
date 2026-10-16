@@ -117,7 +117,7 @@ RunMeter Local Relay
 
 ## 開発
 
-- Next.js 16.3.8 App Router
+- Next.js 16.4.2 App Router
 - React 19.2.8
 - TypeScript 7.0.2
 - Tailwind CSS 4 / shadcn/ui / Recharts
@@ -140,3 +140,8 @@ TypeScript 7をCLI型検査に使い、ESLint互換性のためにTypeScript 6�
 ## 公開リポジトリの準備
 
 個人情報の検査と、開発履歴を持ち込まない公開用ソースの作成方法は[公開手順](docs/PUBLIC_REPOSITORY.md)を参照してください。`node scripts/check-public-data.mjs`は検出値を表示せず、公開候補のファイルを確認します。
+
+
+## 2026-10-16 Web UI dependency update
+
+Next.js and eslint-config-next are pinned to 16.4.2. The npm lockfile is regenerated. The Vercel Web UI is deployed from main after verification; this dependency update does not publish or sign a new Windows installer.

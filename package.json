@@ -31,7 +31,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "lucide-react": "^1.33.0",
-    "next": "16.3.8",
+    "next": "16.4.2",
     "radix-ui": "^1.6.7",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -48,7 +48,7 @@
     "@types/react-dom": "^19",
     "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^9",
-    "eslint-config-next": "16.3.8",
+    "eslint-config-next": "16.4.2",
     "shadcn": "^4.18.0",
     "tailwindcss": "^4",
     "typescript": "npm:@typescript/typescript6@6.0.2"
