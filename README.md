@@ -145,3 +145,11 @@ TypeScript 7をCLI型検査に使い、ESLint互換性のためにTypeScript 6�
 ## 2026-10-16 Web UI dependency update
 
 Next.js and eslint-config-next are pinned to 16.4.2. The npm lockfile is regenerated. The Vercel Web UI is deployed from main after verification; this dependency update does not publish or sign a new Windows installer.
+
+## 2026-10-17 Electron dependency update
+
+Electronを43.7.5から43.8.0へ更新し、`desktop/package-lock.json`のバージョン・配布URL・整合性ハッシュを同期しました。Forgeと同梱Node.jsのバージョンは変更していません。
+
+Linux環境でDesktop単体テスト、Relayテスト、型検査とmain/bridgeのコンパイルを確認しました。Windows実機での起動・インストール・更新・アンインストール、署名とSmartScreen評価は未検証です。署名済みWindowsインストーラーの本番公開は未完了です。Web UIのデプロイだけでは、インストール済みのElectronは更新されません。
+
+Desktopの依存監査には更新前からの開発ツール依存の指摘が残っています（high 8件、moderate 18件）。今回の更新で新しい指摘は増えていません。一般公開前にWindows上で[Desktopの検証・署名手順](desktop/README.md)を実施し、承認済みの配布先から署名済みSetupを公開してください。

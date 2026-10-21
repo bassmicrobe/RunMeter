@@ -33,7 +33,7 @@
     "@electron/fuses": "1.8.0",
     "@types/node": "^24.10.0",
     "@vercel/ncc": "0.45.0",
-    "electron": "43.7.5",
+    "electron": "43.8.0",
     "electron-squirrel-startup": "1.0.1",
     "node-win-x64": "24.21.0",
     "typescript": "npm:@typescript/typescript6@6.0.2"
