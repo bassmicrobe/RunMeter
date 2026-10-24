@@ -35,7 +35,7 @@
     "@vercel/ncc": "0.45.0",
     "electron": "43.8.0",
     "electron-squirrel-startup": "1.0.1",
-    "node-win-x64": "24.21.0",
+    "node-win-x64": "24.22.1",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "overrides": {
