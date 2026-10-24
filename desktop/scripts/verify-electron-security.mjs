@@ -4,7 +4,8 @@ import { get } from 'node:https';
 import { app, net } from 'electron';
 import { readFileSync } from 'node:fs';
 const manifest = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
-try {
+const timeout = setTimeout(() => { console.error("Electron TLS verification timed out"); app.exit(1); }, 90000);
+async function verify() {
   assert.equal(process.versions.electron, manifest.devDependencies.electron);
   assert.equal(process.env.NODE_TLS_REJECT_UNAUTHORIZED === '0', false);
   assert.equal(app.commandLine.hasSwitch('ignore-certificate-errors'), false);
@@ -27,5 +28,7 @@ try {
   await response.body?.cancel();
   console.log(JSON.stringify({ electron: process.versions.electron, node: process.versions.node,
     chrome: process.versions.chrome, nodeTLS: 'verified', chromiumTLS: 'verified' }));
+  clearTimeout(timeout);
   app.exit(0);
-} catch (error) { console.error(error); app.exit(1); }
+}
+void verify().catch(error => { clearTimeout(timeout); console.error(error); app.exit(1); });
