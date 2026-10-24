@@ -8,7 +8,7 @@ import {
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const NODE_VERSION = "24.21.0";
+const NODE_VERSION = "24.22.1";
 const NODE_LICENSE_SHA256 =
   "5888dbb9a1d2b18f2c3e6c5f6af1b39de658372b402a0577b002777f14c62ace";
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
