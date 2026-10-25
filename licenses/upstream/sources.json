@@ -1,5 +1,15 @@
 [
   {
+    "version": "1.11.3",
+    "name": "@emnapi/runtime",
+    "optional": true,
+    "file": "emnapi-runtime-LICENSE.txt",
+    "document": "LICENSE",
+    "source": "https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz#package/LICENSE",
+    "packageIntegrity": "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==",
+    "sha256": "2088f55c6731498410b20c95ebd345ed4a4a800bf74c0fba4d282fd2a021daaa"
+  },
+  {
     "version": "2.3.8",
     "name": "react-remove-scroll-bar",
     "file": "react-remove-scroll-bar-LICENSE.txt",

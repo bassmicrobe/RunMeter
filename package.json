@@ -24,7 +24,7 @@
     "test:relay": "npm --prefix relay test",
     "test:web": "playwright test",
     "check:public": "node scripts/check-public-data.mjs",
-    "test:public": "node --test tests/public-release.test.mjs tests/license-notices.test.mjs",
+    "test:public": "node --test tests/public-release.test.mjs tests/license-notices.test.mjs tests/third-party-notices.test.mjs",
     "brand:generate": "node scripts/generate-brand-assets.mjs",
     "licenses:generate": "node scripts/generate-third-party-notices.mjs && node scripts/prepare-public-licenses.mjs",
     "licenses:check": "node scripts/generate-third-party-notices.mjs --check && node scripts/prepare-public-licenses.mjs --check",

@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -22,18 +22,12 @@ const distributedCssSources = new Set(["node_modules/tailwindcss", "node_modules
 function pinnedSource(source) {
   const body = canonical(readFileSync(join(root, "licenses", "upstream", source.file), "utf8"));
   if (digest(body) !== source.sha256) throw new Error(`Pinned upstream license checksum differs: ${source.name}`);
-  return { name: source.file, body, source: source.source };
+  return { name: source.document ?? source.file, body, source: source.source };
 }
 
 function installedDirectory(packagePath) {
-  let directory = root;
-  while (true) {
-    const candidate = join(directory, packagePath);
-    if (existsSync(join(candidate, "package.json"))) return candidate;
-    const parent = dirname(directory);
-    if (parent === directory) return null;
-    directory = parent;
-  }
+  const candidate = join(root, packagePath);
+  return existsSync(join(candidate, "package.json")) ? candidate : null;
 }
 
 function licenseFiles(directory, recursive = false) {
@@ -49,7 +43,7 @@ function licenseFiles(directory, recursive = false) {
 }
 
 const records = [];
-const skipped = [];
+const pinnedOptional = [];
 const buildOnly = [];
 const missing = [];
 for (const [packagePath, metadata] of Object.entries(lock.packages)) {
@@ -58,11 +52,20 @@ for (const [packagePath, metadata] of Object.entries(lock.packages)) {
     buildOnly.push(`${packagePath}@${metadata.version}`);
     continue;
   }
+  if (metadata.optional) {
+    const name = packagePath.split("node_modules/").at(-1);
+    const source = upstreamSources.find(value => value.optional === true && value.name === name && value.version === metadata.version);
+    if (!source || source.packageIntegrity !== metadata.integrity || !source.source.startsWith(`${metadata.resolved}#`)) {
+      throw new Error(`Optional production dependency needs a checksum-verified pinned license: ${packagePath}@${metadata.version}`);
+    }
+    records.push({ name, version: metadata.version, license: metadata.license ?? "See license text", source: metadata.resolved,
+      documents: [pinnedSource(source)] });
+    pinnedOptional.push(`${name}@${metadata.version}`);
+    continue;
+  }
   const directory = installedDirectory(packagePath);
   if (!directory) {
-    if (!metadata.optional) throw new Error(`Required production dependency is not installed: ${packagePath}`);
-    skipped.push(`${packagePath}@${metadata.version}`);
-    continue;
+    throw new Error(`Required production dependency is not installed in this checkout: ${packagePath}`);
   }
   const manifest = JSON.parse(readFileSync(join(directory, "package.json"), "utf8"));
   if (manifest.version !== metadata.version) throw new Error(`Installed version differs from package-lock: ${manifest.name}`);
@@ -110,7 +113,7 @@ for (const [packagePath, metadata] of Object.entries(lock.packages)) {
 }
 
 if (process.argv.includes("--inventory")) {
-  console.log(JSON.stringify({ records: records.length, skippedOptionalPackages: skipped, excludedBuildCompilers: buildOnly.length, missingLicenses: missing }, null, 2));
+  console.log(JSON.stringify({ records: records.length, pinnedOptionalPackages: pinnedOptional, excludedBuildCompilers: buildOnly.length, missingLicenses: missing }, null, 2));
   process.exit(missing.length > 0 ? 1 : 0);
 }
 if (missing.length > 0) throw new Error(`Missing production license text for: ${missing.map(value => `${value.name}@${value.version}`).join(", ")}`);
@@ -138,7 +141,7 @@ const text = [
   "It preserves upstream license and notice texts, including their copyright holders and public contact details.",
   "RunMeter's own code license and reserved branding terms are separate; see LICENSE and BRANDING_LICENSE.md.",
   "",
-  "Scope: installed non-development packages recorded by package-lock.json (Web runtime/server/CSS dependencies),",
+  "Scope: non-development packages recorded by package-lock.json (Web runtime/server/CSS dependencies),",
   "plus Tailwind CSS and shadcn, whose CSS source files are imported directly into the distributed stylesheet,",
   "Next.js precompiled vendor notices, and the Geist/Geist Mono font licenses used by next/font/google.",
   "This is a conservative package-level inventory, not a claim that every listed module is present in every browser chunk.",
@@ -147,17 +150,27 @@ const text = [
   "Those runtimes and helpers have separate notices shipped with the Windows distribution.",
   "The native @next/swc-* compiler packages are build-only and are excluded from this Web runtime notice inventory.",
   "@next/env and client-only use the MIT licenses of their Next.js and React parent projects; those published marker/environment packages omit standalone license files.",
-  "Platform-specific optional packages absent from this installation are not included below. Regenerate on the target platform when distributing its binaries.",
+  "Required package texts are read only from this checkout's node_modules; ancestor installations are never used.",
+  "Optional runtime license texts are pinned to checksum-verified lockfile archives and included regardless of host installation choices.",
+  "This inventory does not claim to include platform-specific build compiler binaries or their redistribution notices.",
   "",
-  "Optional packages absent from this installation:",
-  ...skipped.sort().map(name => `- ${name}`),
+  "Optional runtime packages with pinned license texts:",
+  ...pinnedOptional.sort().map(name => `- ${name}`),
   "",
   ...sections,
   "",
 ].join("\n");
 if (process.argv.includes("--check")) {
-  if (!existsSync(outputPath) || canonical(readFileSync(outputPath, "utf8")) !== text) {
-    throw new Error("Third-party notices are stale. Run the notice generator after installing the lockfile's dependencies.");
+  if (!existsSync(outputPath)) {
+    throw new Error("Third-party notices are missing. Run the notice generator after installing the lockfile's dependencies.");
+  }
+  const current = canonical(readFileSync(outputPath, "utf8"));
+  if (current !== text) {
+    const currentLines = current.split("\n");
+    const expectedLines = text.split("\n");
+    const firstDifference = expectedLines.findIndex((line, index) => line !== currentLines[index]);
+    const line = firstDifference === -1 ? expectedLines.length + 1 : firstDifference + 1;
+    throw new Error(`Third-party notices are stale (first differing line: ${line}). Run the notice generator after installing the lockfile's dependencies.`);
   }
   console.log(`Third-party notices verified (${records.length} records).`);
 } else {
