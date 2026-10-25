@@ -15,6 +15,10 @@ if (-not $PackagePath) {
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = [System.IO.Compression.ZipFile]::OpenRead((Resolve-Path -LiteralPath $PackagePath).Path)
 try {
+  $updater = $zip.GetEntry('lib/net45/squirrel.exe')
+  if (-not $updater -or $updater.Length -eq 0) {
+    throw 'Squirrel updater is missing from the installer payload.'
+  }
   $required = @('LICENSE', 'LICENSES.chromium.html', 'resources/bridge/NODE-LICENSE.txt')
   $noticesDirectory = Join-Path $appDirectory 'resources\licenses'
   if (-not (Test-Path -LiteralPath $noticesDirectory -PathType Container)) {
@@ -42,7 +46,7 @@ try {
       $stream.Dispose()
     }
   }
-  @{ passed = $true; installerLicenseDocuments = $required.Count; originalHashesMatch = $true } | ConvertTo-Json -Compress
+  @{ passed = $true; installerLicenseDocuments = $required.Count; originalHashesMatch = $true; squirrelUpdaterPresent = $true } | ConvertTo-Json -Compress
 } finally {
   $zip.Dispose()
 }

@@ -1,0 +1,121 @@
+{
+  "documents": [
+    {
+      "component": "Squirrel.Windows",
+      "version": "2.0.1+eef37460ae",
+      "license": "MIT",
+      "file": "Squirrel.Windows-COPYING.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/COPYING",
+      "sha256": "6ec2f61e4e21623d0c008af4d664db8bb029bca354c09ed54926e04a4d9e8a24",
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.tar.gz",
+      "note": "Original project license for the native updater. Separate notices below preserve licenses of source files vendored or merged into it."
+    },
+    {
+      "component": "NuGet.Squirrel",
+      "version": "3.0.0.0 / 50f8d9e438fe948d7109501bd10f6024d0585b70",
+      "license": "Apache-2.0",
+      "file": "NuGet.Squirrel-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/paulcbetts/NuGet/50f8d9e438fe948d7109501bd10f6024d0585b70/LICENSE.txt",
+      "sha256": "63ade0c646a86d07504178b55683652f7210d574d94977ede105f6e8d52c8a36",
+      "sourceArchiveUrl": "https://github.com/paulcbetts/NuGet/archive/50f8d9e438fe948d7109501bd10f6024d0585b70.tar.gz",
+      "note": "Exact vendor/nuget submodule revision recorded by Squirrel.Windows eef37460ae. Core.csproj names its assembly NuGet.Squirrel; CommonAssemblyInfo.cs specifies assembly version 3.0.0.0. This revision has no separate NOTICE file."
+    },
+    {
+      "component": "NuGet.Squirrel copyright attribution",
+      "version": "3.0.0.0 / 50f8d9e438fe948d7109501bd10f6024d0585b70",
+      "license": "Apache-2.0",
+      "file": "NuGet.Squirrel-Copyright-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/paulcbetts/NuGet/50f8d9e438fe948d7109501bd10f6024d0585b70/Common/CommonAssemblyInfo.cs",
+      "sha256": "ee0b2c417024ecc059f4e6eec89025a251f041a9330bb69823ff3c25ec6b56b3",
+      "sourceFileSha256": "290a8287f2c67662549870d5fa73042c703db4bffaf3f00b6b35a159938d5928",
+      "sourceLines": [1, 9],
+      "note": "Unmodified original assembly metadata retains the .NET Foundation copyright attribution separately from the Apache license text."
+    },
+    {
+      "component": "SimpleJson",
+      "version": "0.38.0 (vendored)",
+      "license": "MIT",
+      "file": "SimpleJson-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/facebook-csharp-sdk/simple-json/f739f0b2924bcfa33204e86b8b73aa98be68abac/LICENSE.txt",
+      "sha256": "718e004f954a268b464ccbd4daa53e92dcb8495c0551fb27355c457fdb7732ea",
+      "sourceArchiveUrl": "https://github.com/facebook-csharp-sdk/simple-json/archive/f739f0b2924bcfa33204e86b8b73aa98be68abac.tar.gz",
+      "note": "The exact vendored source header below declares version 0.38.0 and the Outercurve Foundation MIT license. This full MIT text is pinned from the named official upstream project; it is not a claim that this upstream commit is a 0.38.0 release tag."
+    },
+    {
+      "component": "SimpleJson upstream notices",
+      "version": "0.38.0 (vendored)",
+      "license": "MIT",
+      "file": "SimpleJson-NOTICE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/facebook-csharp-sdk/simple-json/f739f0b2924bcfa33204e86b8b73aa98be68abac/NOTICE.txt",
+      "sha256": "d81b1a5f38af5dbce7ec585a69d48c5d27b49f9487bb582ef543aa3adbb1a736",
+      "note": "Unmodified upstream notice includes attribution for the Procurios JSON parser. It also mentions the upstream project's build tool njake; njake is not bundled by Squirrel's C# source vendoring."
+    },
+    {
+      "component": "SimpleJson exact vendored attribution",
+      "version": "0.38.0 (vendored)",
+      "license": "MIT",
+      "file": "SimpleJson-Vendored-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Squirrel/SimpleJson/SimpleJson.cs",
+      "sha256": "c4e634860151bcd8fb335bc9a83cbefc85aa4d97af50bb5d65f993114d9cbd28",
+      "sourceFileSha256": "23b22c0314290443b0058ed0071ea9996ea4ffba854dc45fe0cf7ed5b97a555e",
+      "sourceLines": [1, 20],
+      "note": "Complete unmodified copyright/license header and version line from the exact Squirrel source revision."
+    },
+    {
+      "component": "SimpleSplat / Splat",
+      "version": "vendored from Splat 1.6.2",
+      "license": "MIT",
+      "file": "SimpleSplat-COPYING.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/reactiveui/splat/b45e707151d2270c647f91c77af54d4c79ae77ff/COPYING",
+      "sha256": "9246838cd07e63b09e2715dfeb540ad52d00bd363f6ffc837b54796fc74f4c0f",
+      "sourceArchiveUrl": "https://github.com/reactiveui/splat/archive/b45e707151d2270c647f91c77af54d4c79ae77ff.tar.gz",
+      "note": "Squirrel commit 615753b4b10e009060a759916c32dede0613bbbd adds SimpleSplat sources while removing the external Splat 1.6.2.0 reference. This original Paul Betts MIT license is from the official Splat 1.6.2 tag; there is no separate Splat DLL in the updater."
+    },
+    {
+      "component": "Mono.Options",
+      "version": "vendored at Squirrel.Windows eef37460ae",
+      "license": "MIT",
+      "file": "Mono.Options-LICENSE-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Update/Mono.Options/Options.cs",
+      "sha256": "1989b30e4d3cc15dc92af6fcb93c9bf11a651f2acf2eeb10ecaeb98e8f9d4f04",
+      "sourceFileSha256": "a73ec2f5ed042222c0e168a09fc2d0ed42161fb58534aab781d6db04d4e06c69",
+      "sourceLines": [1, 31],
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.tar.gz",
+      "note": "Complete unmodified original authors/copyright/MIT header. Public author email addresses are retained as upstream attribution."
+    },
+    {
+      "component": "MarkdownSharp and Markdown",
+      "version": "1.13 (vendored)",
+      "license": "MIT AND BSD-3-Clause",
+      "file": "MarkdownSharp-LICENSE-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Squirrel/MarkdownSharp.cs",
+      "sha256": "0f1dc7e3efd5c3ac62b199bbde5c1f6793991b2a62b0704df43c822d84db8015",
+      "sourceFileSha256": "105db407253132ecdfbcc71fe43780fe1c24296812f339c7dd853604ce5bc05f",
+      "sourceLines": [1, 84],
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.tar.gz",
+      "note": "Complete original header preserves MarkdownSharp's MIT text, Markdown's three-clause BSD text, and the John Gruber, Milan Negovan and Jeff Atwood attributions. The source declares version 1.13."
+    },
+    {
+      "component": "BinaryPatchUtility / original bsdiff",
+      "version": "vendored at Squirrel.Windows eef37460ae",
+      "license": "BSD-2-Clause",
+      "file": "BinaryPatchUtility-LICENSE-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Squirrel/BinaryPatchUtility.cs",
+      "sha256": "d752ac62d963b9d346ce271bbd36040ca19eb04ec6d34d719d5ea0904493fc0c",
+      "sourceFileSha256": "00fa5219d2b0ebcd6fd6d8d0b0593cf8135ac66984d65673ba46e2da80b3e25b",
+      "sourceLines": [13, 40],
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.tar.gz",
+      "note": "Complete unmodified Colin Percival BSD license block from the exact vendored file. Its adaptation from LogosBible/bsdiff.net is stated on source line 9."
+    },
+    {
+      "component": "bsdiff.net upstream license notices",
+      "version": "historical license material at 29852ed7285c661b52e893b391c968fb68387f72",
+      "license": "BSD-2-Clause AND MIT",
+      "file": "bsdiff.net-ReadMe-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/LogosBible/bsdiff.net/29852ed7285c661b52e893b391c968fb68387f72/ReadMe.txt",
+      "sha256": "03862c635a710fb4dd548ccd34725e1f38261974227655f8e1249dee9b3b5053",
+      "sourceArchiveUrl": "https://github.com/LogosBible/bsdiff.net/archive/29852ed7285c661b52e893b391c968fb68387f72.tar.gz",
+      "note": "Original project README retains both the Colin Percival BSD text and the Logos Bible Software MIT text for the C# port named as upstream by Squirrel's BinaryPatchUtility.cs. This is supplemental historical license material, not a claim of a separately bundled bsdiff.net assembly or an exact upstream source match."
+    }
+  ]
+}

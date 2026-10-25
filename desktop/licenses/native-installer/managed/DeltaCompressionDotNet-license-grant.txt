@@ -1,0 +1,7 @@
+## License
+
+*DeltaCompressionDotNet* is licensed under the [*Microsoft Public License (MS-PL)*](http://www.microsoft.com/en-us/openness/licenses.aspx).
+
+It's worth noting that large parts of *DeltaCompressionDotNet*'s implementation are generic (we're talking `rangeCheck`, here) and while this wrapper represents my own, original work, it would be difficult to enforce the license against anything but a slavish copy.
+
+To this extent, the library is also licensed under the [*DBAD-PL*](http://www.dbad-license.org).

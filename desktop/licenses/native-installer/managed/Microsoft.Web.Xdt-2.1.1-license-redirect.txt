@@ -1,0 +1,2 @@
+HTTP status: 302
+Location: https://web.archive.org/web/20170919014359id_/http://www.microsoft.com/web/webpi/eula/microsoft_web_xmltransform.htm

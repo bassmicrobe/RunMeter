@@ -131,6 +131,13 @@ function withoutVerifiedLicenseContacts(file, text) {
   const normalized = text.replaceAll("\r\n", "\n");
   const originalLicenseHashes = {
     "licenses/upstream/react-remove-scroll-bar-LICENSE.txt": "a79aae0c0f21990d9d963bb3c5a79cdcea9a46f8523ba55c58d7fe776b6ebc84",
+    "desktop/licenses/native-installer/squirrel-source/Mono.Options-LICENSE-header.txt": "1989b30e4d3cc15dc92af6fcb93c9bf11a651f2acf2eeb10ecaeb98e8f9d4f04",
+    "desktop/licenses/native-installer/managed/SharpCompress-ADC-header.txt": "886311c959b291c0806b301bc98b5da68a855b5c3ab2eb463408210ce2c7038d",
+    "desktop/licenses/native-installer/managed/SharpCompress-BZip2-header.txt": "c1cc769322f02b65532ec80c98e37d5d3ab448a4ea4055eba804d9ae12644de5",
+    "desktop/licenses/native-installer/managed/SharpCompress-DataConverter-header.txt": "daae96c9864f704b79178b1069a95f924eb0c695679c95dc65a96d042a357f63",
+    "desktop/licenses/native-installer/managed/SharpCompress-Deflate-header.txt": "e8ec259f7e6239f28d4889d336f5ac315812f33ea32e6186d764d69bcf804cb8",
+    "desktop/licenses/native-installer/managed/zlib-1.2.3-notice.txt": "7a68aee2048e490c9327618042de1ba219fbfa98e177fa36f89df9c75650ef82",
+    "desktop/licenses/native-installer/native-bootstrap/Setup-unzip-zlib-NOTICE.txt": "0e70be2456b7c697fdc98628f736cfe78ac60e1dc9491976527a33fa4a29872b",
   };
   const contactPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
   if (originalLicenseHashes[path] === createHash("sha256").update(normalized).digest("hex")) {

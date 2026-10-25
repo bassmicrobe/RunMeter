@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "vendorPackage": {
+    "name": "electron-winstaller",
+    "version": "5.4.4",
+    "revision": "5efd6a71c4a1664e3bcabccdd2dba8d40178da1b"
+  },
+  "squirrelSource": {
+    "version": "2.0.1+eef37460ae",
+    "revision": "eef37460aef77b2f9de8cd2237c1e55b344a6554",
+    "sourceUrl": "https://github.com/Squirrel/Squirrel.Windows/tree/eef37460aef77b2f9de8cd2237c1e55b344a6554",
+    "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.zip",
+    "vendoredWtlSourceUrl": "https://github.com/Squirrel/Squirrel.Windows/tree/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Setup/wtl90"
+  },
+  "binaries": [
+    {
+      "file": "Squirrel.exe",
+      "productVersion": "2.0.1+eef37460ae",
+      "sha256": "76359cd4b0349a83337b941332ad042c90351c2bb0a4628307740324c97984cc",
+      "sourceUrl": "https://raw.githubusercontent.com/electron/windows-installer/5efd6a71c4a1664e3bcabccdd2dba8d40178da1b/vendor/Squirrel.exe"
+    },
+    {
+      "file": "Setup.exe",
+      "productVersion": "1.9.1.0",
+      "sha256": "1e47eb606dad4c5c1568cfb8f4e970e1051ba5806aedb1ff3256284a8280d83b",
+      "sourceUrl": "https://raw.githubusercontent.com/electron/windows-installer/5efd6a71c4a1664e3bcabccdd2dba8d40178da1b/vendor/Setup.exe"
+    },
+    {
+      "file": "StubExecutable.exe",
+      "sha256": "d823e6d954f7e445fbbb5c04e40a39cf248a3621f9eccbafdf3f0f1e7acb11dd",
+      "sourceUrl": "https://raw.githubusercontent.com/electron/windows-installer/5efd6a71c4a1664e3bcabccdd2dba8d40178da1b/vendor/StubExecutable.exe"
+    }
+  ],
+  "groups": [
+    "native-bootstrap/sources.json",
+    "squirrel-source/sources.json",
+    "managed/sources.json"
+  ],
+  "updaterMergedAssemblies": [
+    { "name": "DeltaCompressionDotNet", "version": "1.1.0.0" },
+    { "name": "DeltaCompressionDotNet.MsDelta", "version": "1.1.0.0" },
+    { "name": "Microsoft.Web.XmlTransform", "version": "2.1.0.0", "packageVersion": "2.1.1" },
+    { "name": "Mono.Cecil", "version": "0.11.2.0" },
+    { "name": "NuGet.Squirrel", "version": "3.0.0.0" },
+    { "name": "SharpCompress", "version": "0.17.1.0" },
+    { "name": "Squirrel", "version": "2.0.0.0" },
+    { "name": "Update", "version": "2.0.0.0" },
+    { "name": "WpfAnimatedGif", "version": "1.4.15.0" }
+  ],
+  "notes": [
+    "The local vendor binaries were byte-for-byte compared with the fixed upstream electron/windows-installer revision. The updater's product metadata identifies the Squirrel source revision.",
+    "Squirrel changes icons and signs copied binaries during make, so final installer executable hashes can differ from these original vendor hashes.",
+    "updaterMergedAssemblies was read from the original Squirrel.exe ILRepack.List resource without executing the assembly. Microsoft.Web.XmlTransform.XmlTransformation and Transform types were also verified in the actual assembly metadata.",
+    "The vendor 7z executable and DLL are build tools; they are not distributed in RunMeter's Squirrel payload. The native bootstrapper uses its vendored zlib unzip implementation.",
+    "Each component retains its own license. These notices do not change the MIT license of RunMeter's own code or the reserved rights in its logos."
+  ]
+}

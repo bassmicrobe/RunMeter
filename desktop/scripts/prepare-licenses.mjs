@@ -3,6 +3,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync,
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { nativeInstallerDocuments, verifyNativeInstallerVendor } from "./native-installer-licenses.mjs";
 
 const desktop = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = resolve(desktop, "..");
@@ -72,6 +73,10 @@ function preservePackage(name, resolver) {
 preservePackage("electron-squirrel-startup", require);
 manifest.sort((left, right) => left.name.localeCompare(right.name));
 writeFileSync(join(output, "desktop-runtime-packages.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+const nativeSource = join(desktop, "licenses", "native-installer");
+const native = nativeInstallerDocuments(nativeSource);
+verifyNativeInstallerVendor(native.manifest, dirname(require.resolve("electron-winstaller/package.json")));
+for (const file of native.files) copyNotice(join(nativeSource, file), join(output, "native-installer", file));
 writeFileSync(join(output, "README.txt"), [
   "RunMeter Desktop license documents",
   "",
@@ -83,10 +88,11 @@ writeFileSync(join(output, "README.txt"), [
   "The Bridge currently bundles only RunMeter code and Node.js built-ins; it has no bundled third-party package dependencies.",
   "packages/: Original LICENSE/COPYING/NOTICE documents for the desktop runtime dependency tree.",
   "NODE-LICENSE.txt: Original license and third-party notices for the bundled Bridge Node.js runtime.",
+  "native-installer/: Original licenses, notices, component source links and binary provenance for Squirrel.Windows and its incorporated third-party code.",
   "",
   "Electron's LICENSE and LICENSES.chromium.html are at the application directory's top level,",
   "alongside RunMeter.exe. The Bridge also retains its own NODE-LICENSE.txt in resources/bridge/.",
   "All third-party works retain their respective licenses and copyright notices.",
   "",
 ].join("\n"));
-console.log(JSON.stringify({ prepared: true, desktopRuntimePackages: manifest.map(pkg => `${pkg.name}@${pkg.version}`) }));
+console.log(JSON.stringify({ prepared: true, desktopRuntimePackages: manifest.map(pkg => `${pkg.name}@${pkg.version}`), nativeInstallerDocuments: native.documentCount }));

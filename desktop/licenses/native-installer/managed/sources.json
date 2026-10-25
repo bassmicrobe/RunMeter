@@ -1,0 +1,268 @@
+{
+  "documents": [
+    {
+      "component": "DeltaCompressionDotNet and DeltaCompressionDotNet.MsDelta",
+      "version": "1.1.0",
+      "license": "MS-PL",
+      "file": "DeltaCompressionDotNet-license-grant.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/taspeotis/DeltaCompressionDotNet/a339eddf0e6d432e036e2d20c91ee227f436d142/README.md",
+      "sourceArchiveUrl": "https://github.com/taspeotis/DeltaCompressionDotNet/archive/a339eddf0e6d432e036e2d20c91ee227f436d142.tar.gz",
+      "note": "Upstream offers MS-PL or DBAD-PL. This distribution uses the explicit MS-PL grant; the original dual-grant wording is retained.",
+      "sha256": "a68302c0d24f31930bc0534eb932c0968d2e7091d9d6325d589d108a31553008",
+      "sourceFileSha256": "d05d3c152581089bc077c87f8dc8f330899ba0e67c19e55a8a6848e8f81b45ab",
+      "sourceLines": [
+        5,
+        12
+      ]
+    },
+    {
+      "component": "DeltaCompressionDotNet",
+      "version": "1.1.0",
+      "license": "MS-PL",
+      "file": "DeltaCompressionDotNet-attribution.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/taspeotis/DeltaCompressionDotNet/a339eddf0e6d432e036e2d20c91ee227f436d142/DeltaCompressionDotNet/Properties/AssemblyInfo.cs",
+      "sourceArchiveUrl": "https://github.com/taspeotis/DeltaCompressionDotNet/archive/a339eddf0e6d432e036e2d20c91ee227f436d142.tar.gz",
+      "sha256": "7d19e8c3767722d261e9268a41d716ef02adec3f1edcc069a117c835ef747be3",
+      "sourceFileSha256": "5d909578639fdc09c6b4134382c341d8b4709a9ff652558af02b8bfc5e3eff5c",
+      "sourceLines": [
+        13,
+        13
+      ]
+    },
+    {
+      "component": "DeltaCompressionDotNet.MsDelta",
+      "version": "1.1.0",
+      "license": "MS-PL",
+      "file": "DeltaCompressionDotNet-MsDelta-attribution.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/taspeotis/DeltaCompressionDotNet/a339eddf0e6d432e036e2d20c91ee227f436d142/DeltaCompressionDotNet.MsDelta/Properties/AssemblyInfo.cs",
+      "sourceArchiveUrl": "https://github.com/taspeotis/DeltaCompressionDotNet/archive/a339eddf0e6d432e036e2d20c91ee227f436d142.tar.gz",
+      "sha256": "7d19e8c3767722d261e9268a41d716ef02adec3f1edcc069a117c835ef747be3",
+      "sourceFileSha256": "fd5032babe52c2e8217764b1595e4108417ffcc516587fd08bf2037e566bc871",
+      "sourceLines": [
+        13,
+        13
+      ]
+    },
+    {
+      "component": "DeltaCompressionDotNet and DeltaCompressionDotNet.MsDelta - Microsoft Public License",
+      "version": "1.1.0",
+      "license": "MS-PL",
+      "file": "MS-PL.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/spdx/license-list-data/31ba1a50e5397e00a304dbadc76531740e89ee48/text/MS-PL.txt",
+      "note": "Canonical Microsoft Public License text from the SPDX license registry, paired with the explicit versioned upstream grant.",
+      "sha256": "7a162b1da10f1c22db4c68f07bec4a8355259f8d4aab5b00a2b2bbd423d833dd",
+      "sourceFileSha256": "7a162b1da10f1c22db4c68f07bec4a8355259f8d4aab5b00a2b2bbd423d833dd"
+    },
+    {
+      "component": "Mono.Cecil",
+      "version": "0.11.2",
+      "license": "MIT",
+      "file": "Mono.Cecil-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/jbevain/cecil/b2958c0d8473aa6eaa6b3bd7ad19d5f643a97804/LICENSE.txt",
+      "sourceArchiveUrl": "https://github.com/jbevain/cecil/archive/b2958c0d8473aa6eaa6b3bd7ad19d5f643a97804.tar.gz",
+      "sha256": "13d58ecbed676511c0c4c4009bff107025e50007ff5e7901dc562700ec62509e",
+      "sourceFileSha256": "13d58ecbed676511c0c4c4009bff107025e50007ff5e7901dc562700ec62509e"
+    },
+    {
+      "component": "WpfAnimatedGif",
+      "version": "1.4.15",
+      "license": "Apache-2.0",
+      "file": "WpfAnimatedGif-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/XamlAnimatedGif/WpfAnimatedGif/12408d52d65919ae89a3b91b9604045a799e47c6/LICENSE.txt",
+      "sourceArchiveUrl": "https://github.com/XamlAnimatedGif/WpfAnimatedGif/archive/12408d52d65919ae89a3b91b9604045a799e47c6.tar.gz",
+      "note": "This commit is the upstream Bump version to 1.4.15 commit; AssemblyInfo.cs records VersionString 1.4.15.",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "sourceFileSha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "component": "WpfAnimatedGif attribution",
+      "version": "1.4.15",
+      "license": "Apache-2.0",
+      "file": "WpfAnimatedGif-attribution.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/XamlAnimatedGif/WpfAnimatedGif/12408d52d65919ae89a3b91b9604045a799e47c6/WpfAnimatedGif/Properties/AssemblyInfo.cs",
+      "sha256": "7b3ebcfdffd1430c651da1a85f3be3bf6b9d1a926e46a5fc8a50cd08883ea2de",
+      "sourceFileSha256": "b0dca08158994539ff6029233999374ff08334e20d9c5b202a9df8d0bd95ef5b",
+      "sourceLines": [
+        10,
+        12
+      ]
+    },
+    {
+      "component": "SharpCompress",
+      "version": "0.17.1",
+      "license": "MIT",
+      "file": "SharpCompress-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/LICENSE.txt",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "sha256": "b7ca2b6174cee11afe41d78b48527e3d7659a4435c25019a4a5e072299a2f8ed",
+      "sourceFileSha256": "b7ca2b6174cee11afe41d78b48527e3d7659a4435c25019a4a5e072299a2f8ed"
+    },
+    {
+      "component": "SharpCompress - Bouncy Castle portions",
+      "version": "0.17.1",
+      "license": "MIT",
+      "file": "SharpCompress-BouncyCastle-notice.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/README.md",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "sha256": "00edda0f12bdc1879e00e19fe15f6145cefcc65435097be0f329d7c9bb5c03f9",
+      "sourceFileSha256": "7cf94b587cdc81108c74ee08789700dcba9535d9e844786d0b8e6be6186d19e9",
+      "sourceLines": [
+        185,
+        193
+      ]
+    },
+    {
+      "component": "SharpCompress - Apache Ant BZip2 portions",
+      "version": "0.17.1",
+      "license": "Apache-2.0",
+      "file": "SharpCompress-BZip2-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/src/SharpCompress/Compressors/BZip2/BZip2Constants.cs",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "note": "Retains the Apache Software Foundation copyright and Keiron Liddle/Aftex attribution. Full Apache-2.0 terms are included in WpfAnimatedGif-LICENSE.txt.",
+      "sha256": "c1cc769322f02b65532ec80c98e37d5d3ab448a4ea4055eba804d9ae12644de5",
+      "sourceFileSha256": "4fd4e74a3b218b51632e77e48f87daa96141473071c35566c61c4f8fe374ffdc",
+      "sourceLines": [
+        1,
+        22
+      ]
+    },
+    {
+      "component": "SharpCompress - DotNetZip Deflate and JCraft jzlib portions",
+      "version": "0.17.1",
+      "license": "MS-PL AND BSD-3-Clause",
+      "file": "SharpCompress-Deflate-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/src/SharpCompress/Compressors/Deflate/DeflateManager.cs",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "note": "Contains the complete JCraft redistribution conditions and the original DotNetZip MS-PL declaration. The related source names zlib attribution as well.",
+      "sha256": "e8ec259f7e6239f28d4889d336f5ac315812f33ea32e6186d764d69bcf804cb8",
+      "sourceFileSha256": "6f697dd043739d5fe3ee185b3a452ee657a83441e7292ab3dffb5bcdd6413ce4",
+      "sourceLines": [
+        1,
+        68
+      ]
+    },
+    {
+      "component": "SharpCompress - DotNetZip MS-PL terms",
+      "version": "0.17.1",
+      "license": "MS-PL",
+      "file": "DotNetZip-License.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/DinoChiesa/DotNetZip/6424030d5ec750cbfc391cab233263c8bd1da3a7/License.txt",
+      "sourceArchiveUrl": "https://github.com/DinoChiesa/DotNetZip/archive/6424030d5ec750cbfc391cab233263c8bd1da3a7.tar.gz",
+      "note": "Original DotNetZip author repository, matching the project named by the embedded Deflate source headers.",
+      "sha256": "2075f829806d99c2896508be9240b6c9355f509bd83e1b23989f75f833379363",
+      "sourceFileSha256": "1e8e6e07465e31e7b97860f141da262f503c41c79d3b76be080660d5823295ca"
+    },
+    {
+      "component": "SharpCompress - Claunia ADC portions",
+      "version": "0.17.1",
+      "license": "MIT",
+      "file": "SharpCompress-ADC-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/src/SharpCompress/Compressors/ADC/ADCBase.cs",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "sha256": "886311c959b291c0806b301bc98b5da68a855b5c3ab2eb463408210ce2c7038d",
+      "sourceFileSha256": "ca55c55664ebb6ef15e75675f749f05862c4cca13748ba163684c18cfaab2dff",
+      "sourceLines": [
+        1,
+        25
+      ]
+    },
+    {
+      "component": "SharpCompress - Mono DataConverter portions",
+      "version": "0.17.1",
+      "license": "MIT",
+      "file": "SharpCompress-DataConverter-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/src/SharpCompress/Converters/DataConverter.cs",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "sha256": "daae96c9864f704b79178b1069a95f924eb0c695679c95dc65a96d042a357f63",
+      "sourceFileSha256": "09326d506659d3b2419a94b472428b33f7b99382f6bbf35461ef1ab8f1242798",
+      "sourceLines": [
+        1,
+        39
+      ]
+    },
+    {
+      "component": "SharpCompress - junrar RAR decoder portions",
+      "version": "0.17.1",
+      "license": "LicenseRef-UnRAR",
+      "file": "SharpCompress-RAR-header.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/adamhathcock/sharpcompress/513e59f83015cf5890d8fdb54a253a68ba3ecf39/src/SharpCompress/Compressors/Rar/Unpack15.cs",
+      "sourceArchiveUrl": "https://github.com/adamhathcock/sharpcompress/archive/513e59f83015cf5890d8fdb54a253a68ba3ecf39.tar.gz",
+      "note": "Original source explicitly forbids using this code to recreate the RAR compression algorithm. It is not represented as MIT.",
+      "sha256": "7b148be94086ab6833f7d78b3b26692bca95338028151ad8b72ed82f162f9532",
+      "sourceFileSha256": "4a77fbf228c5f9d3ff66caac23b532aa2773cbf7e68825d46dc4402dd3d3d803",
+      "sourceLines": [
+        1,
+        17
+      ]
+    },
+    {
+      "component": "SharpCompress - junrar UnRAR terms",
+      "version": "0.17.1",
+      "license": "LicenseRef-UnRAR",
+      "file": "junrar-UnRAR-LICENSE.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/junrar/junrar/79f422fdeae2adf70968c80f75781404ab4a04b3/license.txt",
+      "sourceArchiveUrl": "https://github.com/junrar/junrar/archive/79f422fdeae2adf70968c80f75781404ab4a04b3.tar.gz",
+      "note": "Full UnRAR terms from the upstream junrar-0.6 release commit dated 2012-09-03, before SharpCompress 0.17.1. The versioned SharpCompress RAR header expressly applies this license and its no-RAR-compressor restriction.",
+      "sha256": "343b508c9e4cf96d75eaab9b65a3b69ddf27309e6154a4c8f0cf5568e4639ed8",
+      "sourceFileSha256": "9d90c3649d4eb064ce2fff366a7421107fbbc3c65d8eede45df5dec95e4e016c"
+    },
+    {
+      "component": "Microsoft.Web.Xdt / Microsoft.Web.XmlTransform",
+      "version": "2.1.1 (assembly 2.1.0.0)",
+      "license": "LicenseRef-Microsoft-Web-XDT-EULA",
+      "file": "Microsoft.Web.Xdt-2.1.1-EULA.txt",
+      "sourceUrl": "https://web.archive.org/web/20130114091101id_/http://www.microsoft.com:80/web/webpi/eula/microsoft_web_xmltransform.htm",
+      "sha256": "ef2e5f2c0164cdecae308029245ea47b99163870ba8a1247105803c4b7ede82c",
+      "sourceFileSha256": "43d7f2a0f420049b1ac77ea71247505924aae4471aab74d00b89d7ce63c002b9",
+      "sourceLines": [
+        221,
+        531
+      ],
+      "note": "Original Microsoft XDT-specific license, recovered from a timestamped archive of the official Microsoft page. UTF-8 plain text extracted from Windows-1252 HTML, retaining every nonempty paragraph in order. The fixed NuGet 2.1.1 nuspec points to LinkId 273778; its archived 2017 redirect points to this Microsoft EULA page. This is not the later Apache-2.0 or MIT source license. Redistribution conditions include Windows-only use and protective distributor/end-user terms. Windows-1252 punctuation is decoded explicitly to Unicode smart quotes and en dash; no replacement or C1 control characters remain in the readable text."
+    },
+    {
+      "component": "Microsoft.Web.Xdt package license provenance",
+      "version": "2.1.1",
+      "license": "LicenseRef-Microsoft-Web-XDT-EULA",
+      "file": "Microsoft.Web.Xdt-2.1.1.nuspec.txt",
+      "sourceUrl": "https://api.nuget.org/v3-flatcontainer/microsoft.web.xdt/2.1.1/microsoft.web.xdt.nuspec",
+      "sha256": "165bdf830577a79edfd459fd447e722bdc7fba8b8f98feebdacacaf03c0a3454",
+      "sourceFileSha256": "d3659a6763d99e36a3100935a5fd4a73c7092cf071c7709f817872462195a832",
+      "note": "Original immutable NuGet package metadata. Its license URL was captured at https://web.archive.org/web/20170919014359id_/http://go.microsoft.com/fwlink/?LinkId=273778 with HTTP 302 Location to the archived official Microsoft microsoft_web_xmltransform.htm page. The current live Microsoft URLs redirect to unrelated documentation."
+    },
+    {
+      "component": "Microsoft.Web.Xdt original historical EULA HTML",
+      "version": "2.1.1 (assembly 2.1.0.0)",
+      "license": "LicenseRef-Microsoft-Web-XDT-EULA",
+      "file": "Microsoft.Web.Xdt-2.1.1-EULA.source.html.txt",
+      "sourceUrl": "https://web.archive.org/web/20130114091101id_/http://www.microsoft.com:80/web/webpi/eula/microsoft_web_xmltransform.htm",
+      "sha256": "43d7f2a0f420049b1ac77ea71247505924aae4471aab74d00b89d7ce63c002b9",
+      "sourceFileSha256": "43d7f2a0f420049b1ac77ea71247505924aae4471aab74d00b89d7ce63c002b9",
+      "note": "Exact original HTTP response bytes from the fixed archive of the official Microsoft EULA page, retained without decoding, transcoding, or newline normalization. This inert .txt provenance record remains Windows-1252; the readable companion separately decodes its punctuation and retains every nonempty license paragraph. RunMeter MIT does not relicense Microsoft XDT."
+    },
+    {
+      "component": "Microsoft.Web.Xdt license-link provenance",
+      "version": "2.1.1",
+      "license": "LicenseRef-Microsoft-Web-XDT-EULA",
+      "file": "Microsoft.Web.Xdt-2.1.1-license-redirect.txt",
+      "sourceUrl": "https://web.archive.org/web/20170919014359id_/http://go.microsoft.com/fwlink/?LinkId=273778",
+      "sha256": "4becb7d0529210fa6f802c25b64a3a04b008067b46548844c58f5f111794a1d5",
+      "note": "Status and Location response fields captured from the fixed historical redirect of the license URL named by the immutable NuGet 2.1.1 nuspec. This links that package to the recovered Microsoft XDT-specific EULA."
+    },
+    {
+      "component": "SharpCompress - zlib source attribution and terms",
+      "version": "zlib 1.2.3 portions in SharpCompress 0.17.1",
+      "license": "Zlib",
+      "file": "zlib-1.2.3-notice.txt",
+      "sourceUrl": "https://raw.githubusercontent.com/madler/zlib/abf180a067223611620dd97dd5681df7c7fa7c9b/README",
+      "sha256": "7a68aee2048e490c9327618042de1ba219fbfa98e177fa36f89df9c75650ef82",
+      "sourceFileSha256": "365db9b693fda6c66ddd97d81ae3eb17be32c890909553973a77439d85900494",
+      "sourceLines": [
+        93,
+        126
+      ],
+      "sourceArchiveUrl": "https://github.com/madler/zlib/archive/abf180a067223611620dd97dd5681df7c7fa7c9b.tar.gz",
+      "note": "SharpCompress DeflateManager.cs explicitly identifies original zlib v1.2.3 as a source. This is that exact upstream release tag commit; copyright wording is retained as published."
+    }
+  ]
+}

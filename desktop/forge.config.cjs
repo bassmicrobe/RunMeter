@@ -24,6 +24,7 @@ module.exports = {
       /^\/installer\.ts$/,
       /^\/tests(?:\/|$)/,
       /^\/scripts(?:\/|$)/,
+      /^\/licenses(?:\/|$)/,
       /^\/tsconfig\.json$/,
       /^\/forge\.config\.cjs$/,
       /^\/dist\/bridge(?:\/|$)/,

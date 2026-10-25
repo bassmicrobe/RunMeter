@@ -4,10 +4,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { extractFile, listPackage } from "@electron/asar";
+import { nativeInstallerDocuments } from "./native-installer-licenses.mjs";
 
 const desktop = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const packaged = resolve(process.argv[2] ?? join(desktop, "out", "RunMeter-win32-x64"));
 const directory = join(packaged, "resources", "licenses");
+const native = nativeInstallerDocuments(join(directory, "native-installer"));
 const required = [
   "LICENSE", "BRANDING_LICENSE.md", "THIRD_PARTY_NOTICES.txt",
   "DESKTOP-THIRD-PARTY-LICENSES.txt", "NODE-LICENSE.txt", "README.txt",
@@ -49,6 +51,7 @@ const archive = join(packaged, "resources", "app.asar");
 const files = listPackage(archive).map(file => file.replaceAll("\\", "/"));
 assert.ok(files.includes("/dist/main/THIRD_PARTY_LICENSES.txt"), "ncc notice is missing from app.asar");
 assert.ok(!files.some(file => file.startsWith("/dist/licenses/")), "License resources should be accessible outside app.asar");
+assert.ok(!files.some(file => file.startsWith("/licenses/")), "Native license sources should be copied to accessible resources");
 assert.equal(JSON.parse(extractFile(archive, "package.json")).license, "MIT");
 assert.equal(
   Buffer.compare(
@@ -58,4 +61,4 @@ assert.equal(
   0,
   "Packaged ncc notice differs from its accessible copy",
 );
-console.log(JSON.stringify({ passed: true, projectDocuments: required.length, desktopRuntimePackages: packages.length, electronAndChromiumNotices: true, nodeNotice: true, asarNotice: true }));
+console.log(JSON.stringify({ passed: true, projectDocuments: required.length, desktopRuntimePackages: packages.length, nativeInstallerDocuments: native.documentCount, electronAndChromiumNotices: true, nodeNotice: true, asarNotice: true }));

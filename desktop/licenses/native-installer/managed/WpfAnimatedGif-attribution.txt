@@ -1,0 +1,3 @@
+[assembly: AssemblyCompany("Thomas Levesque")]
+[assembly: AssemblyProduct("WpfAnimatedGif")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]

@@ -1,0 +1,3 @@
+# Preserve the downloaded original and extracted license bytes for SHA-256 checks.
+*.txt -text
+sources.json text eol=lf

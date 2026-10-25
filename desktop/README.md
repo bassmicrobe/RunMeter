@@ -64,6 +64,10 @@ RunMeter本体のコードはMITライセンス、ロゴ・ブランド素材は
 
 `package`では`verify:licenses`を、`make`では加えて`verify:installer-licenses`を自動実行します。前者はアプリの配布フォルダーと`app.asar`、後者は実際のSquirrel `.nupkg`に入った全ライセンス文書を調べ、原文とのSHA-256一致を確認します。検証だけを再実行する場合は上記コマンドを使用してください。不足する必須文書や変更された原文を検出すると検証は失敗します。依存を更新した場合は、先にルートのOSS表記生成手順を実行してから再ビルドします。
 
+Squirrel.Windows本体・Setup・実行スタブと、その中に組み込まれたコードの原文は`licenses/native-installer/`で固定し、配布時は`resources/licenses/native-installer/`へコピーします。`sources.json`には、公式vendorバイナリと一致を確認したSHA-256、対応ソースrevision、各原文の出典・ハッシュ・ソース入手先を記録しています。WTLなどの条件は対象コンポーネントに適用され、RunMeter本体のMIT表記は変わりません。同梱バイナリや原文が固定値から変わるとビルドは失敗するため、Desktop依存更新時にはこの表記も再確認してください。
+
+Updater内の`Microsoft.Web.Xdt 2.1.1`には当時のMicrosoft専用EULAが適用されます。Windows上での使用・再配布条件と、配布者・利用者に求められる保護条項は、`native-installer/managed/`に保存した専用EULA原文を参照してください。
+
 ## 同梱Bridgeランタイムのセキュリティ更新
 
 Claudeステータスライン用Bridgeの同梱Node.jsを24.21.0から24.22.1へ更新しました。[Node.js公式のセキュリティリリース](https://nodejs.org/en/blog/release/v24.22.1/)に含まれるBrotli修正（CVE-2026-111497）を取り込みます。メジャー更新による検証範囲の拡大を避け、既存の24系を維持しています。依存宣言・ロックファイル・ランタイム準備スクリプトの固定バージョンを同期し、24.22.1の公式LICENSEが既存の固定SHA-256と一致することも確認しています。

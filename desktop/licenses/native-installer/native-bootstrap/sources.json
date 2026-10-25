@@ -1,0 +1,60 @@
+{
+  "documents": [
+    {
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.zip",
+      "sha256": "6ec2f61e4e21623d0c008af4d664db8bb029bca354c09ed54926e04a4d9e8a24",
+      "file": "Squirrel-Windows-COPYING.txt",
+      "license": "MIT",
+      "component": "Squirrel.Windows",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/COPYING",
+      "version": "2.0.1+eef37460ae"
+    },
+    {
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.zip",
+      "sha256": "691cf3071a5094a7e0508b275efdd4573c31f7ed6f917f5320d4aa913e601283",
+      "file": "Execution-Stub-semver-LICENSE.md",
+      "license": "MIT",
+      "component": "Squirrel execution stub / semver",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/StubExecutable/LICENSE.md",
+      "version": "vendored in Squirrel.Windows 2.0.1"
+    },
+    {
+      "component": "Setup unzip / zlib",
+      "sourceLines": [
+        5,
+        38
+      ],
+      "sourceFileSha256": "30751fe785be4097a3158f064d534c0768a6b27828439cf0c915dc76253f57fd",
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.zip",
+      "license": "Zlib",
+      "file": "Setup-unzip-zlib-NOTICE.txt",
+      "sha256": "0e70be2456b7c697fdc98628f736cfe78ac60e1dc9491976527a33fa4a29872b",
+      "version": "zlib 1.1.3 with fixes and Lucian Wischik modifications",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Setup/unzip.cpp"
+    },
+    {
+      "component": "Windows Template Library",
+      "sourceLines": [
+        1,
+        10
+      ],
+      "sourceFileSha256": "40f1e6a0e0bf80b875b4c906314fc55bd1b3a036d3e5ba492b3a08d3169f1d58",
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.zip",
+      "license": "CPL-1.0",
+      "file": "WTL-NOTICE.txt",
+      "sha256": "dc73abf15fb7d6b9b876bdbf23ce90606d05d8567fa7259187348e3a546a8604",
+      "version": "9.0 (vendored in Squirrel.Windows)",
+      "sourceUrl": "https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/eef37460aef77b2f9de8cd2237c1e55b344a6554/src/Setup/wtl90/atlapp.h"
+    },
+    {
+      "version": "9.0 (vendored in Squirrel.Windows)",
+      "component": "Windows Template Library",
+      "file": "CPL-1.0.txt",
+      "sourceArchiveUrl": "https://github.com/Squirrel/Squirrel.Windows/archive/eef37460aef77b2f9de8cd2237c1e55b344a6554.zip",
+      "sha256": "9698f2ba346a875a47a9cc6bb602e3d126758774dde1f575b4f3369dc3f2574f",
+      "license": "CPL-1.0",
+      "sourceUrl": "https://raw.githubusercontent.com/spdx/license-list-data/d46e94e2c78ceede1cfc63cfa0396472d2798d4c/text/CPL-1.0.txt",
+      "note": "Canonical CPL 1.0 text. The exact vendored WTL headers identify CPL 1.0; WTL-NOTICE.txt preserves their copyright and license notice."
+    }
+  ]
+}
