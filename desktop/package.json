@@ -3,6 +3,7 @@
   "productName": "RunMeter",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "CodexとClaudeの利用率・リセット日時を端末内で確認するRunMeterデスクトップアプリ",
   "author": {
@@ -12,16 +13,19 @@
   "main": "dist/main/index.js",
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
-    "build": "npm run clean && npm run build:main && npm run build:bridge",
-    "build:main": "ncc build main.ts -o dist/main -m -e electron",
-    "build:bridge": "ncc build bridge.ts -o dist/bridge -m && node scripts/prepare-bridge-runtime.mjs",
+    "build": "npm run clean && npm run build:main && npm run build:bridge && npm run build:licenses",
+    "build:main": "ncc build main.ts -o dist/main -m -e electron --license THIRD_PARTY_LICENSES.txt",
+    "build:bridge": "ncc build bridge.ts -o dist/bridge -m --license THIRD_PARTY_LICENSES.txt && node scripts/prepare-bridge-runtime.mjs",
+    "build:licenses": "node scripts/prepare-licenses.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "node --test tests/*.test.ts",
     "verify:bridge": "node scripts/verify-bridge.mjs",
     "verify:desktop": "node scripts/verify-desktop.mjs",
+    "verify:licenses": "node scripts/verify-package-licenses.mjs",
+    "verify:installer-licenses": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-installer-licenses.ps1",
     "start": "npm run build && electron-forge start",
-    "package": "npm run typecheck && npm run build && electron-forge package --platform=win32 --arch=x64",
-    "make": "npm run typecheck && npm run build && electron-forge make --platform=win32 --arch=x64"
+    "package": "npm run typecheck && npm run build && electron-forge package --platform=win32 --arch=x64 && npm run verify:licenses",
+    "make": "npm run typecheck && npm run build && electron-forge make --platform=win32 --arch=x64 && npm run verify:licenses && npm run verify:installer-licenses"
   },
   "config": {
     "forge": "./forge.config.cjs"

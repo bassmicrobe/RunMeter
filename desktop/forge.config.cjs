@@ -15,6 +15,7 @@ module.exports = {
     extraResource: [
       path.resolve(__dirname, "assets"),
       path.resolve(__dirname, "dist", "bridge"),
+      path.resolve(__dirname, "dist", "licenses"),
     ],
     ignore: [
       /^\/main\.ts$/,
@@ -26,6 +27,7 @@ module.exports = {
       /^\/tsconfig\.json$/,
       /^\/forge\.config\.cjs$/,
       /^\/dist\/bridge(?:\/|$)/,
+      /^\/dist\/licenses(?:\/|$)/,
       /^\/out(?:\/|$)/,
     ],
   },
@@ -42,6 +44,10 @@ module.exports = {
         setupIcon: path.resolve(__dirname, "assets", "runmeter.ico"),
         iconUrl: "https://run-meter.vercel.app/favicon.ico",
         noMsi: true,
+        // Squirrel's default nuspec does not include top-level HTML files.
+        additionalFiles: [
+          { src: "LICENSES.chromium.html", target: "lib\\net45\\LICENSES.chromium.html" },
+        ],
         ...(certificateFile && certificatePassword
           ? { certificateFile, certificatePassword }
           : {}),

@@ -48,11 +48,21 @@ npm --prefix desktop test
 npm --prefix desktop run typecheck
 npm --prefix desktop run verify:bridge
 npm --prefix desktop run verify:desktop
+npm --prefix desktop run verify:licenses
+npm --prefix desktop run verify:installer-licenses
 ```
 
 `verify:bridge`はビルド後に実行し、一時ディレクトリだけを使用します。利用中のRelay認証情報やClaude設定にはアクセスしません。ビルドはNode.js 24系を使用します。Electron ForgeのZIP展開には、未修正の`extract-zip`に代えてElectron公式の`@electron-internal/extract-zip@1.0.5`を使用します。
 
 `verify:desktop`はビルド後に実行し、一時データ・一時ブラウザープロファイルで非表示のElectronを起動します。オフライン復帰画面・外部遷移制限・Relay起動・終了待機を確認します。ポート47831を使用中の場合は、既存Relayに触れず検証を中止します。
+
+## ライセンス文書の同梱
+
+RunMeter本体のコードはMITライセンス、ロゴ・ブランド素材は別の権利表記です。詳細はリポジトリの`LICENSE`と`BRANDING_LICENSE.md`を参照してください。
+
+ビルドではnccのライセンス出力を有効にし、Desktopにバンドルする`electron-squirrel-startup`・`debug`・`ms`の原文LICENSEと、存在する場合のNOTICEを保持します。配布物の`resources/licenses/`には、本体・ブランド素材・Web依存の文書、Desktop依存の原文、同梱Node.jsのライセンスをまとめます。アプリ最上位にあるElectronの`LICENSE`と`LICENSES.chromium.html`、`resources/bridge/NODE-LICENSE.txt`も保持します。Squirrelの既定設定では最上位のHTMLが収録されないため、`LICENSES.chromium.html`を追加ファイルとして明示し、Setupの配布内容にも含めます。
+
+`package`では`verify:licenses`を、`make`では加えて`verify:installer-licenses`を自動実行します。前者はアプリの配布フォルダーと`app.asar`、後者は実際のSquirrel `.nupkg`に入った全ライセンス文書を調べ、原文とのSHA-256一致を確認します。検証だけを再実行する場合は上記コマンドを使用してください。不足する必須文書や変更された原文を検出すると検証は失敗します。依存を更新した場合は、先にルートのOSS表記生成手順を実行してから再ビルドします。
 
 ## 同梱Bridgeランタイムのセキュリティ更新
 

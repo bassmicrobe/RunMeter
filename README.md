@@ -7,6 +7,8 @@
 
 [開発：サイバーアイ・テクノロジー株式会社](https://cybereye-tech.jp/)
 
+本体コードは[MITライセンス](LICENSE)です。ロゴ・ブランド素材は[会社の権利留保](BRANDING_LICENSE.md)で、MITの対象外です。第三者OSS・フォントは[OSSライセンス一覧](THIRD_PARTY_NOTICES.txt)に記載した条件に従います。
+
 Codex / Claude の使用率、次のリセット日時、トークン履歴を1画面で確認する、local-firstの利用メーターです。架空の利用データは表示しません。
 
 ## ロゴとアイコン
@@ -18,6 +20,22 @@ favicon・ホーム画面用アイコン・Windows用アイコンは、添付ロ
 ```bash
 npm run brand:generate
 ```
+
+## ライセンス・OSS表記
+
+- 本体コード：MIT。著作権・許諾文の保持など、[原文](LICENSE)の条件を確認してください。
+- ロゴ、シンボル、派生アイコン、共有画像：[ブランド素材の権利表記](BRANDING_LICENSE.md)に従います。公開する派生製品では、別途許諾がなければ独自のブランド素材へ置き換えてください。
+- 第三者OSSとGeist / Geist Monoフォント：[ライセンス原文と著作権表記](THIRD_PARTY_NOTICES.txt)を保持しています。MITを第三者の素材に一律に適用するものではありません。
+- Web画面のフッターから「ライセンス・OSS表記」を開けます。Windows配布物にも本体・ブランド・OSS・ランタイムの文書を同梱します。
+
+依存を更新した場合は、ライセンス文書を再生成して差分を確認します。
+
+```bash
+npm run licenses:generate
+npm run licenses:check
+```
+
+開発専用ツールや別途インストールするCodex / Claude Code本体のライセンスをRunMeterのMITライセンスで置き換えることはありません。同梱範囲と生成方法はOSS一覧と[Windows版の説明](desktop/README.md)を参照してください。
 
 ## Windows版
 

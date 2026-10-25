@@ -2,6 +2,8 @@
   "name": "runmeter",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "description": "Codex・Claudeの利用率、リセット日時、トークン履歴を端末内で確認するWeb／Windows向けダッシュボード。AI認証情報・利用データのクラウド保存なし。",
   "type": "module",
   "author": {
     "name": "サイバーアイ・テクノロジー株式会社",
@@ -22,8 +24,10 @@
     "test:relay": "npm --prefix relay test",
     "test:web": "playwright test",
     "check:public": "node scripts/check-public-data.mjs",
-    "test:public": "node --test tests/public-release.test.mjs",
+    "test:public": "node --test tests/public-release.test.mjs tests/license-notices.test.mjs",
     "brand:generate": "node scripts/generate-brand-assets.mjs",
+    "licenses:generate": "node scripts/generate-third-party-notices.mjs && node scripts/prepare-public-licenses.mjs",
+    "licenses:check": "node scripts/generate-third-party-notices.mjs --check && node scripts/prepare-public-licenses.mjs --check",
     "lint": "eslint",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
   },

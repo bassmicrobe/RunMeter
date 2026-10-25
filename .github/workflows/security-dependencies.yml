@@ -19,6 +19,7 @@ jobs:
           node-version: '24.22.1'
       - run: npm ci --no-audit --no-fund
       - run: npm --prefix desktop ci --no-audit --no-fund
+      - run: npm run licenses:check
       - run: npm run lint
       - run: npm run typecheck && npm run relay:typecheck
       - run: npm test && npm run test:public && npm run check:public

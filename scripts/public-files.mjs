@@ -126,10 +126,36 @@ function isKnownSyntheticCredential(file, value) {
       "87353204333d35db7a69cf8eaae460a2460dca03670f9d2866e6fa395a6adf5a";
 }
 
+function withoutVerifiedLicenseContacts(file, text) {
+  const path = file.replace(/^commit:[a-f0-9]+:/, "").replaceAll("\\", "/");
+  const normalized = text.replaceAll("\r\n", "\n");
+  const originalLicenseHashes = {
+    "licenses/upstream/react-remove-scroll-bar-LICENSE.txt": "a79aae0c0f21990d9d963bb3c5a79cdcea9a46f8523ba55c58d7fe776b6ebc84",
+  };
+  const contactPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+  if (originalLicenseHashes[path] === createHash("sha256").update(normalized).digest("hex")) {
+    return normalized.replace(contactPattern, "[upstream attribution contact]");
+  }
+  if (!["THIRD_PARTY_NOTICES.txt", "public/licenses/THIRD_PARTY_NOTICES.txt"].includes(path)) {
+    return text;
+  }
+  // Published license text stays intact. Only the email check ignores contacts
+  // in intact generated license blocks. Secrets, paths, local usernames and text
+  // outside the blocks remain checked.
+  return normalized.replace(
+    /^===== BEGIN LICENSE ([^\r\n]+) sha256:([a-f0-9]{64}) =====\n([\s\S]*?)^===== END LICENSE =====(?=\n|$)/gm,
+    (block, _identity, expectedHash, license) => {
+      const actualHash = createHash("sha256").update(license).digest("hex");
+      if (actualHash !== expectedHash) return block;
+      return block.replace(license, license.replace(contactPattern, "[upstream attribution contact]"));
+    },
+  );
+}
+
 export function inspectText(file, text, { localUser = basename(homedir()) } = {}) {
   const findings = [];
   for (const [kind, expression] of patterns) {
-    let matches = [...(kind === "email" ? withoutUrlUserInfo(text) : text).matchAll(expression)];
+    let matches = [...(kind === "email" ? withoutUrlUserInfo(withoutVerifiedLicenseContacts(file, text)) : text).matchAll(expression)];
     if (kind === "provider-token") matches = matches.filter((match) => !isKnownSyntheticCredential(file, match[0]));
     if (kind === "personal-path") matches = matches.filter((match) => !isExamplePath(match[0]));
     if (kind === "email") {

@@ -1,0 +1,16 @@
+[
+  {
+    "revision": "1d9058a0342c5900d6088cdf81a518291edb45e3",
+    "name": "Geist",
+    "file": "geist-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/1d9058a0342c5900d6088cdf81a518291edb45e3/ofl/geist/OFL.txt",
+    "sha256": "6a873c900f584109b13ae0aaf81d6e3cf0a68751a216b03f7b6c68d547057bb4"
+  },
+  {
+    "revision": "c5ab61088c14548190abde878e8062f293ba67ac",
+    "name": "Geist Mono",
+    "file": "geist-mono-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/c5ab61088c14548190abde878e8062f293ba67ac/ofl/geistmono/OFL.txt",
+    "sha256": "6a873c900f584109b13ae0aaf81d6e3cf0a68751a216b03f7b6c68d547057bb4"
+  }
+]
