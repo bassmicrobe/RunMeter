@@ -2,6 +2,8 @@
 
 RunMeterのWeb UIとLocal RelayをElectronにまとめたWindows版です。利用者はNode.jsやnpmをインストールする必要がありません。
 
+[Windows x64版のダウンロード](https://github.com/bassmicrobe/RunMeter/releases/tag/v0.1.0)。v0.1.0は未署名プレビューです。配布ファイルと検証範囲は[リリース案内](../docs/releases/v0.1.0.md)を参照してください。
+
 ## 利用者の流れ
 
 1. `RunMeterSetup.exe`をダブルクリック
@@ -18,7 +20,7 @@ Codex連携には公式Codex CLIまたは対応するCodexデスクトップ環�
 
 ## 更新とアンインストール
 
-この版には自動更新はありません。新しい署名済み`RunMeterSetup.exe`を実行して更新してください。Web UIは起動時に公開中の版を読み込みますが、同梱Relay・Electron・Node.jsはSetupによる更新が必要です。
+この版には自動更新はありません。新しい版の`RunMeterSetup.exe`を実行して更新してください。プレビューの署名状態はリリースページで確認できます。Web UIは起動時に公開中の版を読み込みますが、同梱Relay・Electron・Node.jsはSetupによる更新が必要です。
 
 Windowsの「インストールされているアプリ」からRunMeterを削除できます。アンインストール時にはWindows自動起動を解除し、RunMeterが設定したClaudeのステータスラインを元へ戻します。手動で変更された設定は上書きしません。競合やバックアップ復号の失敗時は設定を保持し、`%LOCALAPPDATA%\RunMeter\desktop-uninstall-warning.json`に記録します。アプリから先にClaudeを切断して復元しておくこともできます。
 
@@ -76,7 +78,7 @@ Claudeステータスライン用Bridgeの同梱Node.jsを24.21.0から24.22.1�
 
 ## コード署名
 
-未署名ビルドは開発・社内検証専用です。一般公開前にWindows Authenticode証明書を用意し、次の環境変数を設定して`npm run desktop:make`を実行します。
+未署名ビルドを配布する場合は、GitHub Releasesのprereleaseとして未署名であることと検証範囲を明記します。正式版の公開にはWindows Authenticode証明書を用意し、次の環境変数を設定して`npm run desktop:make`を実行します。
 
 ```powershell
 $env:RUNMETER_WINDOWS_CERTIFICATE_FILE = "C:\path\to\certificate.pfx"

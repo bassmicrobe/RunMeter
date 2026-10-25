@@ -173,7 +173,13 @@ export function inspectText(file, text, { localUser = basename(homedir()) } = {}
     if (matches.length > 0) findings.push({ file, kind, count: matches.length });
   }
   if (localUser.length >= 4 && !isExamplePath(localUser)) {
-    const count = text.toLowerCase().split(localUser.toLowerCase()).length - 1;
+    // A release's publisher is public repository metadata. Keep checking its
+    // tag, asset names, query, and every occurrence outside this exact endpoint.
+    const userText = text.replace(
+      /https:\/\/github\.com\/[a-z\d-]+\/RunMeter\/releases(?=\/|[?#\s"'<>)]|$)/gi,
+      "[public RunMeter release repository]",
+    );
+    const count = userText.toLowerCase().split(localUser.toLowerCase()).length - 1;
     if (count > 0) findings.push({ file, kind: "local-user-name", count });
   }
   return findings;

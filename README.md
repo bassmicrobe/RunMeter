@@ -39,6 +39,8 @@ npm run licenses:check
 
 ## Windows版
 
+[Windows x64 プレビュー版をダウンロード](https://github.com/bassmicrobe/RunMeter/releases/tag/v0.1.0)。この配布版は未署名です。発行元の署名を確認できないため、Windowsで警告が表示される場合があります。[確認済みの範囲と配布ファイル](docs/releases/v0.1.0.md)も参照してください。
+
 一般利用者は`RunMeterSetup.exe`をダブルクリックするだけで使えます。Node.js、npm、PowerShellコマンドは不要です。
 
 1. `RunMeterSetup.exe`を起動
@@ -47,7 +49,7 @@ npm run licenses:check
 
 アプリを閉じても通知領域でLocal Relayが動作し、Windowsログイン時の自動起動は通知領域メニューから切り替えられます。Web画面と同じ表示を使いますが、認証情報と利用履歴はPC内だけに保存され、RunMeterのサーバーには送信・保存されません。
 
-開発用の未署名インストーラーは`desktop/out/make/squirrel.windows/x64/RunMeterSetup.exe`に生成されます。一般公開版は発行元を確認できるようAuthenticode署名が必要です。署名後もSmartScreenの評価は別途確認します。
+インストーラーは`desktop/out/make/squirrel.windows/x64/RunMeterSetup.exe`に生成されます。未署名の配布はプレビューとして明示します。正式版は発行元を確認できるようAuthenticode署名が必要で、署名後もSmartScreenの評価は別途確認します。
 
 ## できること
 

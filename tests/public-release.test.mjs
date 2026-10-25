@@ -150,3 +150,24 @@ test("email checks distinguish URL authority userinfo from actual email text", (
     { file: "test-fixture.mjs", kind: "email", count: 2 },
   ]);
 });
+
+test("public RunMeter release owners are allowed without exempting other private identity", () => {
+  const owner = "fixture-owner";
+  const release = `https://github.com/${owner}/RunMeter/releases`;
+  for (const url of [release, `${release}/tag/v0.1.0`, `${release}/download/v0.1.0/RunMeterSetup.exe`]) {
+    assert.deepEqual(inspectText("README.md", url, { localUser: owner }), []);
+  }
+  for (const value of [
+    owner,
+    `${release}?note=${owner}`,
+    `${release}/download/v0.1.0/${owner}.zip`,
+    `https://github.com/${owner}/PrivateProject/releases`,
+    `https://github.com/${owner}/RunMeter/releases-archive`,
+    `https://github.com.evil.test/${owner}/RunMeter/releases`,
+  ]) {
+    assert.ok(inspectText("README.md", value, { localUser: owner }).some(finding => finding.kind === "local-user-name"));
+  }
+  const token = "sk-" + "x".repeat(40);
+  assert.ok(inspectText("README.md", `${release}?token=${token}`, { localUser: owner })
+    .some(finding => finding.kind === "provider-token"));
+});
