@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import {
   CircleAlert,
@@ -337,6 +338,14 @@ export function RunMeterDashboard({
           <div className="flex min-w-0 items-center gap-2.5">
             <SidebarTrigger className="size-11 text-muted-foreground sm:size-9" />
             <Separator orientation="vertical" className="hidden h-5 sm:block" />
+            <Image
+              src="/brand/runmeter-mark-dark.svg"
+              alt=""
+              width={28}
+              height={28}
+              unoptimized
+              className="size-7 shrink-0 md:hidden"
+            />
             <div className="min-w-0">
               <h1 className="truncate text-[15px] font-semibold tracking-[-0.02em]">
                 利用状況

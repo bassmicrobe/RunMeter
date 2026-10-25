@@ -72,7 +72,7 @@ export function AppSidebar({
       aria-label="RunMeterサイドバー"
     >
       <SidebarHeader className="h-[69px] justify-center px-4 group-data-[collapsible=icon]:px-1.5">
-        <BrandMark className="group-data-[collapsible=icon]:[&>div:nth-child(2)]:hidden" />
+        <BrandMark />
       </SidebarHeader>
       <SidebarSeparator className="mx-3 w-auto bg-sidebar-border/80" />
       <SidebarContent className="px-2 py-3">

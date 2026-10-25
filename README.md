@@ -1,8 +1,23 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="public/brand/runmeter-logo-dark.svg">
+  <img src="public/brand/runmeter-logo-light.svg" alt="RunMeter" width="278" height="64">
+</picture>
+
 # RunMeter
 
 [開発：サイバーアイ・テクノロジー株式会社](https://cybereye-tech.jp/)
 
 Codex / Claude の使用率、次のリセット日時、トークン履歴を1画面で確認する、local-firstの利用メーターです。架空の利用データは表示しません。
+
+## ロゴとアイコン
+
+ロゴのSVG原本は`public/brand/`にあります。READMEは明暗テーマに合わせてロゴを切り替え、アプリのサイドバーは折りたたむとシンボルだけを表示します。
+
+favicon・ホーム画面用アイコン・Windows用アイコンは、添付ロゴの正方形SVGから生成しています。更新時は次を実行します。
+
+```bash
+npm run brand:generate
+```
 
 ## Windows版
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BrandMark } from "@/components/runmeter/brand-mark";
 
 export const metadata: Metadata = {
   title: "Windows版の使い方",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function GuidePage() {
   return (
     <main className="mx-auto w-full max-w-2xl px-5 py-8 text-sm leading-7 sm:py-12">
+      <BrandMark className="mb-4" />
       <Link href="/" className="inline-flex min-h-11 items-center text-primary underline underline-offset-4">
         利用状況へ戻る
       </Link>

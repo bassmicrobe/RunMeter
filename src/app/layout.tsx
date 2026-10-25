@@ -41,11 +41,12 @@ export const metadata: Metadata = {
   publisher: SITE_CONFIG.developer.name,
   icons: {
     icon: [
-      { url: "/favicon.ico?v=2", sizes: "64x64" },
-      { url: "/icon.png?v=2", type: "image/png", sizes: "512x512" },
+      { url: "/brand/runmeter-appicon.svg?v=20261025", type: "image/svg+xml", sizes: "any" },
+      { url: "/favicon.ico?v=20261025", type: "image/x-icon", sizes: "16x16 32x32 48x48 64x64" },
+      { url: "/icon.png?v=20261025", type: "image/png", sizes: "512x512" },
     ],
-    apple: [{ url: "/apple-icon.png?v=2", sizes: "180x180" }],
-    shortcut: ["/favicon.ico?v=2"],
+    apple: [{ url: "/apple-icon.png?v=20261025", sizes: "180x180" }],
+    shortcut: ["/favicon.ico?v=20261025"],
   },
   openGraph: {
     type: "website",
