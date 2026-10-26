@@ -1,0 +1,118 @@
+name: Windows signed build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-signed-build
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.22.1'
+      - run: npm ci --no-audit --no-fund
+      - run: npm --prefix desktop ci --no-audit --no-fund
+      - run: npm run licenses:check && npm run lint
+      - run: npm run typecheck && npm run relay:typecheck
+      - run: npm test && npm run test:public && npm run check:public
+      - run: npm run build
+      - run: npm --prefix desktop test && npm --prefix desktop run typecheck
+      - run: npm --prefix desktop run build
+      - run: npm --prefix desktop run verify:bridge && npm --prefix desktop run verify:desktop
+      - name: Verify Electron version and Node/Chromium TLS
+        working-directory: desktop
+        run: node_modules/.bin/electron scripts/verify-electron-security.mjs
+
+  sign:
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    environment: windows-signing
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AZURE_CORE_OUTPUT: none
+      RUNMETER_SIGNING_ENDPOINT: ${{ vars.RUNMETER_SIGNING_ENDPOINT }}
+      RUNMETER_SIGNING_ACCOUNT: ${{ vars.RUNMETER_SIGNING_ACCOUNT }}
+      RUNMETER_SIGNING_PROFILE: ${{ vars.RUNMETER_SIGNING_PROFILE }}
+      RUNMETER_SIGNING_PUBLISHER: ${{ vars.RUNMETER_SIGNING_PUBLISHER }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Require signing configuration and mask it in logs
+        run: |
+          foreach ($name in @('RUNMETER_SIGNING_ENDPOINT', 'RUNMETER_SIGNING_ACCOUNT', 'RUNMETER_SIGNING_PROFILE', 'RUNMETER_SIGNING_PUBLISHER')) {
+            $value = [Environment]::GetEnvironmentVariable($name)
+            if ([string]::IsNullOrWhiteSpace($value)) { throw "Missing signing Environment variable: $name" }
+            $escaped = $value.Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
+            Write-Output "::add-mask::$escaped"
+          }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.22.1'
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        with:
+          dotnet-version: '8.0.x'
+          architecture: x64
+      - run: npm ci --no-audit --no-fund
+      - run: npm --prefix desktop ci --no-audit --no-fund
+      - run: ./desktop/scripts/prepare-signing-tools.ps1
+      # This Environment's federated identity and approval/branch rules must be
+      # configured before running. No reusable client secret or PFX is needed.
+      - name: Azure login using GitHub OIDC
+        uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Make signed installer and verify the final payload
+        run: npm run desktop:make:signed
+      - name: Stage verified artifacts only
+        run: |
+          $version = (Get-Content -LiteralPath desktop/package.json -Raw | ConvertFrom-Json).version
+          if ($version -notmatch '^\d+\.\d+\.\d+(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$') { throw 'Unexpected desktop version.' }
+          # Match electron-winstaller's SemVer-to-NuGet prerelease conversion.
+          $versionParts = $version -split '-', 2
+          $nugetVersion = $versionParts[0]
+          if ($versionParts.Count -eq 2) { $nugetVersion += '-' + $versionParts[1].Replace('.', '') }
+          $output = Join-Path $env:GITHUB_WORKSPACE 'desktop/out/make/squirrel.windows/x64'
+          $names = @('RunMeterSetup.exe', "RunMeterDesktop-$nugetVersion-full.nupkg", 'RELEASES', 'signature-verification.json')
+          $stage = Join-Path $env:RUNNER_TEMP 'runmeter-signed-artifacts'
+          if (Test-Path -LiteralPath $stage) { throw 'Artifact staging directory must be new.' }
+          New-Item -ItemType Directory -Path $stage | Out-Null
+          $sums = foreach ($name in $names) {
+            $source = Join-Path $output $name
+            if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw 'A required verified artifact is missing.' }
+            Copy-Item -LiteralPath $source -Destination (Join-Path $stage $name)
+            (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant() + '  ' + $name
+          }
+          [IO.File]::WriteAllText((Join-Path $stage 'SHA256SUMS.txt'), (($sums -join "`n") + "`n"), [Text.UTF8Encoding]::new($false))
+      - name: Upload verified build for release review
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: RunMeter-windows-signed-${{ github.sha }}
+          path: ${{ runner.temp }}/runmeter-signed-artifacts/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

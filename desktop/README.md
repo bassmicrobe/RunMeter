@@ -78,11 +78,15 @@ Claudeステータスライン用Bridgeの同梱Node.jsを24.21.0から24.22.1�
 
 ## コード署名
 
-未署名ビルドを配布する場合は、GitHub Releasesのprereleaseとして未署名であることと検証範囲を明記します。正式版の公開にはWindows Authenticode証明書を用意し、次の環境変数を設定して`npm run desktop:make`を実行します。
+Windows正式版の署名にはAzure Artifact SigningのPublic Trustを使用します。日本法人の審査・GitHub ActionsのOIDC設定・ローカルツールの準備は[Windows署名手順](../docs/WINDOWS_SIGNING.md)を参照してください。PFXや長期client secretは不要です。
+
+承認済みの署名設定とAzureへのログインを用意して、リポジトリのルートから実行します。
 
 ```powershell
-$env:RUNMETER_WINDOWS_CERTIFICATE_FILE = "C:\path\to\certificate.pfx"
-$env:RUNMETER_WINDOWS_CERTIFICATE_PASSWORD = "..."
+npm --prefix desktop run signing:check
+npm run desktop:make:signed
 ```
 
-証明書ファイルとパスワードはGitへコミットしません。
+署名を要求したビルドは設定不足や署名失敗時に停止します。GitHub Actionsの手動署名ビルドは成果物の保存までを行い、GitHub Releasesへは自動公開しません。正式版の公開前には最終Setup・実際のインストーラー内容の署名検査と、クリーンなWindowsでのインストール・更新・アンインストール確認を行います。
+
+未署名ビルドの`npm run desktop:make`も開発用に利用できます。配布する場合はGitHub Releasesのprereleaseとして、未署名であることと検証範囲を明記します。

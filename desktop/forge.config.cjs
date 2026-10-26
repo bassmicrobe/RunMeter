@@ -2,9 +2,8 @@ const path = require("node:path");
 
 const { FuseVersion, FuseV1Options } = require("@electron/fuses");
 const { FusesPlugin } = require("@electron-forge/plugin-fuses");
-
-const certificateFile = process.env.RUNMETER_WINDOWS_CERTIFICATE_FILE;
-const certificatePassword = process.env.RUNMETER_WINDOWS_CERTIFICATE_PASSWORD;
+const { getWindowsSignOptions } = require("./scripts/windows-signing.cjs");
+const windowsSign = getWindowsSignOptions();
 
 module.exports = {
   packagerConfig: {
@@ -49,9 +48,7 @@ module.exports = {
         additionalFiles: [
           { src: "LICENSES.chromium.html", target: "lib\\net45\\LICENSES.chromium.html" },
         ],
-        ...(certificateFile && certificatePassword
-          ? { certificateFile, certificatePassword }
-          : {}),
+        ...(windowsSign ? { windowsSign } : {}),
       },
     },
   ],

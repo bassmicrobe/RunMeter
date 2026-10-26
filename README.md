@@ -51,6 +51,8 @@ npm run licenses:check
 
 インストーラーは`desktop/out/make/squirrel.windows/x64/RunMeterSetup.exe`に生成されます。未署名の配布はプレビューとして明示します。正式版は発行元を確認できるようAuthenticode署名が必要で、署名後もSmartScreenの評価は別途確認します。
 
+署名にはAzure Artifact Signingを使用します。日本法人の審査・GitHub OIDC設定・`npm run desktop:make:signed`の手順は[Windows署名ガイド](docs/WINDOWS_SIGNING.md)を参照してください。署名ビルド用の手動ワークフローは、最終成果物の検証後にActions artifactへ保存します。
+
 ## できること
 
 - サービスごとの使用率と残り割合を最上段に表示

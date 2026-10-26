@@ -20,6 +20,7 @@
     "desktop:start": "npm --prefix desktop run start",
     "desktop:package": "npm --prefix desktop run package",
     "desktop:make": "npm --prefix desktop run make",
+    "desktop:make:signed": "npm --prefix desktop run make:signed",
     "test": "npm run test:relay",
     "test:relay": "npm --prefix relay test",
     "test:web": "playwright test",
