@@ -1,5 +1,7 @@
 import { execFile } from "node:child_process";
-import { isAbsolute, join } from "node:path";
+import { posix } from "node:path";
+
+const { isAbsolute, join } = posix;
 
 const PATH_MARKER = "__RUNMETER_PATH__";
 const SHELL_TIMEOUT_MS = 5_000;

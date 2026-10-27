@@ -23,7 +23,7 @@ Codex連携には公式Codex CLIまたは対応するCodexデスクトップ環�
 - 対象：Apple Silicon（arm64）。ForgeとBridge用Node.jsはビルドしたMacのアーキテクチャに合わせるため、Intel Mac用はIntel Macでビルドします（未検証）。
 - 配布形式：`@electron-forge/maker-zip`で`RunMeter.app`だけを入れたZIP。DMGは作りません。
 - Bundle ID：`jp.cybereye-tech.runmeter`。カテゴリは開発ツールです。
-- 署名：Developer ID署名とAppleの公証は未設定です。名前変更とInfo.plistの書き換えでElectronのアドホック署名が無効になるため、`postPackage`でバンドル全体をアドホック署名し直し、`codesign --verify --deep --strict`で確認します。同梱Bridge用`node`はNode.js公式の署名をそのまま保ちます。正式配布にはDeveloper ID Application証明書での署名・公証・staplingが必要です。
+- 署名：Developer ID署名とAppleの公証は未設定です。名前変更とInfo.plistの書き換えでElectronのアドホック署名が無効になるため、`postPackage`でバンドル全体をアドホック署名し直し、`codesign --verify --deep --strict`で確認します。同梱Bridge用`node`はNode.js公式のDeveloper ID署名（Node.js Foundation）をそのまま保ちます。起動時にデータフォルダーへコピーする際、`com.apple.quarantine`属性は引き継がれないことを確認済みです。正式配布にはDeveloper ID Application証明書での署名・公証・staplingが必要です。
 - 常駐：メニューバーにテンプレート画像のアイコンを表示します。ウィンドウを閉じるとDockからも隠し、メニューバーの「RunMeterを開く」かDockのアイコンで再表示します。
 - 自動起動：Windows版と同じく初回に有効にし、メニューバーの「ログイン時に起動」で切り替えます。macOSは起動引数を渡せないため、`app.getLoginItemSettings().wasOpenedAtLogin`でログイン時の起動を判定し、ウィンドウを出さずに常駐します。
 - 配置：「アプリケーション」フォルダー以外から起動すると移動を確認します（App Translocationで一時的な場所から起動されると、ログイン項目が壊れるため）。

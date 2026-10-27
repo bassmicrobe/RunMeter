@@ -107,7 +107,8 @@ export function GuideNote({
 }) {
   const Icon = tone === "caution" ? CircleAlert : Info;
   return (
-    <aside
+    <div
+      role="note"
       className={cn(
         "flex gap-3 rounded-lg border p-4",
         tone === "caution"
@@ -123,7 +124,7 @@ export function GuideNote({
         <p className="font-medium text-foreground">{title}</p>
         <div className="mt-1 text-muted-foreground">{children}</div>
       </div>
-    </aside>
+    </div>
   );
 }
 
