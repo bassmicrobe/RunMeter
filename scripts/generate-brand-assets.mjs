@@ -52,6 +52,7 @@ async function template(size) {
   return sharp(Buffer.from(mark), { density: 384 }).resize(size, size).png().toBuffer();
 }
 
+const RETINA_SUFFIX = "@2x";
 const [icon, apple, favicon, windowsIcon, macIcon, trayIcon, trayIcon2x, logo] = await Promise.all([
   png(512), png(180), ico([16, 32, 48, 64]), ico([16, 24, 32, 48, 64, 128, 256]),
   icns([["icp4", 16], ["icp5", 32], ["ic11", 32], ["ic12", 64], ["ic07", 128], ["ic08", 256],
@@ -67,7 +68,8 @@ const assets = [
   ["desktop/assets/runmeter.ico", windowsIcon],
   ["desktop/assets/runmeter.icns", macIcon],
   ["desktop/assets/runmeterTemplate.png", trayIcon],
-  ["desktop/assets/runmeterTemplate@2x.png", trayIcon2x],
+  // Electron loads the "@2x" sibling for Retina menu bars.
+  [`desktop/assets/runmeterTemplate${RETINA_SUFFIX}.png`, trayIcon2x],
   ["desktop/assets/runmeter-logo.svg", logo],
 ];
 await Promise.all(assets.map(([path, contents]) => writeFile(new URL(path, root), contents)));
