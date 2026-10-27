@@ -39,3 +39,31 @@ jobs:
           if (!(Test-Path desktop/out/RunMeter-win32-x64/RunMeter.exe)) { throw 'Missing executable' }
           if (!(Test-Path desktop/out/RunMeter-win32-x64/resources/app.asar)) { throw 'Missing app archive' }
           Write-Output 'Unsigned validation package built from pinned Electron; not distributed.'
+  macos-desktop:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.22.1'
+      - run: npm --prefix desktop ci --no-audit --no-fund
+      - run: npm --prefix desktop test && npm --prefix desktop run typecheck
+      - run: npm --prefix desktop run build
+      - run: npm --prefix desktop run verify:bridge
+      - run: npm --prefix desktop run verify:desktop
+      - name: Verify actual Electron version and Node/Chromium TLS
+        run: node_modules/.bin/electron scripts/verify-electron-security.mjs
+        working-directory: desktop
+      - name: Build unsigned validation ZIP (not a release)
+        run: npm run desktop:make:mac
+      - name: Check validation package outputs
+        run: |
+          app=desktop/out/RunMeter-darwin-arm64/RunMeter.app
+          test -x "$app/Contents/MacOS/RunMeter"
+          test -f "$app/Contents/Resources/app.asar"
+          test -x "$app/Contents/Resources/bridge/node"
+          test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Contents/Info.plist")" = jp.cybereye-tech.runmeter
+          codesign --verify --deep --strict "$app"
+          ls desktop/out/make/zip/darwin/arm64/RunMeter-darwin-arm64-*.zip
+          echo 'Unsigned validation ZIP built from pinned Electron; not distributed.'

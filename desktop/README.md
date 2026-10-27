@@ -1,6 +1,6 @@
-# RunMeter Desktop for Windows
+# RunMeter Desktop for Windows / macOS
 
-RunMeterのWeb UIとLocal RelayをElectronにまとめたWindows版です。利用者はNode.jsやnpmをインストールする必要がありません。
+RunMeterのWeb UIとLocal RelayをElectronにまとめたWindows版・Mac版です。利用者はNode.jsやnpmをインストールする必要がありません。利用者向けの手順は[使い方マニュアル](https://run-meter.vercel.app/guide)にあります。
 
 [Windows x64版のダウンロード](https://github.com/bassmicrobe/RunMeter/releases/tag/v0.1.0)。v0.1.0は未署名プレビューです。配布ファイルと検証範囲は[リリース案内](../docs/releases/v0.1.0.md)を参照してください。
 
@@ -17,6 +17,20 @@ Relayは通知領域で動作します。初回はWindowsログイン時の自�
 Claudeを接続すると、既存の`~/.claude/settings.json`を保持したまま、Claude Code公式`statusLine`を使うRunMeterブリッジを追加します。必要なNode.jsランタイムはアプリに同梱するため、利用者による追加インストールは不要です。切断時はRunMeterが設定した内容との一致を確認してから以前の設定へ戻します。
 
 Codex連携には公式Codex CLIまたは対応するCodexデスクトップ環境、Claude連携にはClaude Codeが別途必要です。RunMeterのSetupにはこれらの製品本体は含まれません。
+
+## Mac版の仕様
+
+- 対象：Apple Silicon（arm64）。ForgeとBridge用Node.jsはビルドしたMacのアーキテクチャに合わせるため、Intel Mac用はIntel Macでビルドします（未検証）。
+- 配布形式：`@electron-forge/maker-zip`で`RunMeter.app`だけを入れたZIP。DMGは作りません。
+- Bundle ID：`jp.cybereye-tech.runmeter`。カテゴリは開発ツールです。
+- 署名：Developer ID署名とAppleの公証は未設定です。名前変更とInfo.plistの書き換えでElectronのアドホック署名が無効になるため、`postPackage`でバンドル全体をアドホック署名し直し、`codesign --verify --deep --strict`で確認します。同梱Bridge用`node`はNode.js公式のDeveloper ID署名（Node.js Foundation）をそのまま保ちます。起動時にデータフォルダーへコピーする際、`com.apple.quarantine`属性は引き継がれないことを確認済みです。正式配布にはDeveloper ID Application証明書での署名・公証・staplingが必要です。
+- 常駐：メニューバーにテンプレート画像のアイコンを表示します。ウィンドウを閉じるとDockからも隠し、メニューバーの「RunMeterを開く」かDockのアイコンで再表示します。
+- 自動起動：Windows版と同じく初回に有効にし、メニューバーの「ログイン時に起動」で切り替えます。macOSは起動引数を渡せないため、`app.getLoginItemSettings().wasOpenedAtLogin`でログイン時の起動を判定し、ウィンドウを出さずに常駐します。
+- 配置：「アプリケーション」フォルダー以外から起動すると移動を確認します（App Translocationで一時的な場所から起動されると、ログイン項目が壊れるため）。
+- PATH：Finderやログイン項目から起動したアプリはシステムの最小PATHで動くため、パッケージ版は起動時にログインシェル（`$SHELL -ilc`、5秒で打ち切り）のPATHを読み取ります。そのあとに`/opt/homebrew/bin`、`/usr/local/bin`、`~/.local/bin`、`~/.npm-global/bin`、`~/.volta/bin`、`/Applications/Codex.app/Contents/Resources`を加えてCodexを探します。
+- 保存先：Relayのデータと、Electronのブラウザープロファイルはどちらも`~/Library/Application Support/RunMeter`に置きます。ファイル名は重なりません。
+- アンインストール：Mac版には削除時の処理がありません。削除前にアプリからClaudeの接続を解除してください。解除せずに削除しても、Bridgeはデータフォルダー側にあるためClaude Codeのステータスラインは動き続けます。
+- CI：`security-dependencies.yml`の`macos-desktop`ジョブ（macos-latest、arm64）が、Desktopの単体テスト・型検査・Bridge検証・隔離smoke・Electronの版とTLS・未署名ZIPの生成・Bundle ID・アドホック署名の封印を確認します。配布やartifact保存はしません。
 
 ## 更新とアンインストール
 
@@ -35,13 +49,23 @@ npm run desktop:setup
 npm run desktop:start
 ```
 
-Windows用インストーラーを生成します。
+Windows用インストーラーを生成します（Windows上で実行）。
 
 ```powershell
 npm run desktop:make
 ```
 
 生成先：`desktop/out/make/squirrel.windows/x64/RunMeterSetup.exe`
+
+Mac用ZIPを生成します（Mac上で実行）。`desktop:package:mac`はZIPを作らずアプリだけを生成します。
+
+```bash
+npm run desktop:make:mac
+```
+
+生成先：`desktop/out/make/zip/darwin/arm64/RunMeter-darwin-arm64-<版>.zip`（アプリ本体は`desktop/out/RunMeter-darwin-arm64/RunMeter.app`）
+
+Bridge用Node.jsは、Windowsでは`node-win-x64`パッケージから、Macではnodejs.orgの公式`node-v<版>-darwin-<arch>.tar.gz`から取り出します。`node-darwin-arm64`パッケージは24系が公開されていないためです。アーカイブは`scripts/prepare-bridge-runtime.mjs`に固定したSHA-256（公式`SHASUMS256.txt`の値）と一致した場合だけ展開し、`node_modules/.cache/runmeter-node/`に保存します。`node-win-x64`はMacで`npm ci`できるように`optionalDependencies`に置き、`app.asar`には入れません。
 
 検証用コマンド：
 
@@ -54,6 +78,8 @@ npm --prefix desktop run verify:licenses
 npm --prefix desktop run verify:installer-licenses
 ```
 
+`verify:installer-licenses`と署名関連のコマンドはWindows専用です。Macでは`verify:licenses`が`RunMeter.app/Contents/Resources`を検査します。
+
 `verify:bridge`はビルド後に実行し、一時ディレクトリだけを使用します。利用中のRelay認証情報やClaude設定にはアクセスしません。ビルドはNode.js 24系を使用します。Electron ForgeのZIP展開には、未修正の`extract-zip`に代えてElectron公式の`@electron-internal/extract-zip@1.0.5`を使用します。
 
 `verify:desktop`はビルド後に実行し、一時データ・一時ブラウザープロファイルで非表示のElectronを起動します。オフライン復帰画面・外部遷移制限・Relay起動・終了待機を確認します。ポート47831を使用中の場合は、既存Relayに触れず検証を中止します。
@@ -65,6 +91,8 @@ RunMeter本体のコードはMITライセンス、ロゴ・ブランド素材は
 ビルドではnccのライセンス出力を有効にし、Desktopにバンドルする`electron-squirrel-startup`・`debug`・`ms`の原文LICENSEと、存在する場合のNOTICEを保持します。配布物の`resources/licenses/`には、本体・ブランド素材・Web依存の文書、Desktop依存の原文、同梱Node.jsのライセンスをまとめます。アプリ最上位にあるElectronの`LICENSE`と`LICENSES.chromium.html`、`resources/bridge/NODE-LICENSE.txt`も保持します。Squirrelの既定設定では最上位のHTMLが収録されないため、`LICENSES.chromium.html`を追加ファイルとして明示し、Setupの配布内容にも含めます。
 
 `package`では`verify:licenses`を、`make`では加えて`verify:installer-licenses`を自動実行します。前者はアプリの配布フォルダーと`app.asar`、後者は実際のSquirrel `.nupkg`に入った全ライセンス文書を調べ、原文とのSHA-256一致を確認します。検証だけを再実行する場合は上記コマンドを使用してください。不足する必須文書や変更された原文を検出すると検証は失敗します。依存を更新した場合は、先にルートのOSS表記生成手順を実行してから再ビルドします。
+
+Mac版では、Electronが`RunMeter.app`の外に置く`LICENSE`と`LICENSES.chromium.html`を、Forgeの`packageAfterExtract`で`Contents/Resources/`へコピーします。ZIPにはアプリだけが入るためです。Squirrel.Windowsの文書はWindows版にだけ同梱します。
 
 Squirrel.Windows本体・Setup・実行スタブと、その中に組み込まれたコードの原文は`licenses/native-installer/`で固定し、配布時は`resources/licenses/native-installer/`へコピーします。`sources.json`には、公式vendorバイナリと一致を確認したSHA-256、対応ソースrevision、各原文の出典・ハッシュ・ソース入手先を記録しています。WTLなどの条件は対象コンポーネントに適用され、RunMeter本体のMIT表記は変わりません。同梱バイナリや原文が固定値から変わるとビルドは失敗するため、Desktop依存更新時にはこの表記も再確認してください。
 

@@ -714,12 +714,12 @@ export function ProviderConnectionDialog({
               <span className="flex items-start gap-2">
                 <WifiOff className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                 <span>
-                  このPCでRunMeterが起動していません。Windowsアプリを起動してから再確認してください。
+                  このPCでRunMeterが起動していません。RunMeterアプリを起動してから再確認してください。
                 </span>
               </span>
             </InlineNotice>
             <ol className="list-decimal space-y-1.5 ps-5 text-xs leading-5 text-muted-foreground">
-              <li>Windowsのスタートメニューから「RunMeter」を起動します。</li>
+              <li>Windowsはスタートメニュー、Macは「アプリケーション」フォルダーから「RunMeter」を起動します。</li>
               <li>RunMeterに表示されるペアリングコードを確認します。</li>
               <li>この画面へ戻り、「再確認」を押します。</li>
             </ol>
@@ -734,7 +734,7 @@ export function ProviderConnectionDialog({
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  Windows版の説明
+                  使い方マニュアル
                   <ExternalLink className="size-3.5" aria-hidden="true" />
                 </a>
               </Button>

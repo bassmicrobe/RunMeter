@@ -182,7 +182,7 @@ function EmptyTelemetryNotice() {
             利用データはまだありません
           </h2>
           <p className="mt-1.5 max-w-3xl text-[13px] leading-5 text-muted-foreground">
-            WindowsのスタートメニューからRunMeterを起動し、上のサービス行にある「接続」からペアリングコードを入力してください。
+            このPCでRunMeterアプリ（Windows・Mac）を起動し、上のサービス行にある「接続」からペアリングコードを入力してください。
           </p>
           <p className="mt-1 text-xs leading-5 text-muted-foreground">
             接続後は、利用率、次のリセット日時、トークン履歴をこの画面へ自動反映します。
@@ -444,7 +444,7 @@ export function RunMeterDashboard({
               <div className="min-w-0">
                 <p className="text-sm font-semibold">RunMeterとの接続が切れています</p>
                 <p className="mt-0.5 text-xs leading-5 text-amber-100/75">
-                  表示中の数値は{formatClock(snapshot.generatedAt, timeZone)}時点の前回取得値です。Windowsアプリを起動すると自動で再接続します。
+                  表示中の数値は{formatClock(snapshot.generatedAt, timeZone)}時点の前回取得値です。このPCでRunMeterアプリを起動すると自動で再接続します。
                 </p>
               </div>
             </div>
@@ -580,6 +580,12 @@ export function RunMeterDashboard({
               ローカル優先設計・AI認証情報のクラウド保存なし
             </span>
             <span className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+              <a
+                href="/guide"
+                className="inline-flex min-h-11 items-center text-foreground/75 underline-offset-4 hover:text-primary hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-0"
+              >
+                使い方マニュアル
+              </a>
               <a
                 href="/licenses"
                 className="inline-flex min-h-11 items-center text-foreground/75 underline-offset-4 hover:text-primary hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-0"

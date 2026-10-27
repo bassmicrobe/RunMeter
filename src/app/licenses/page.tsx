@@ -45,7 +45,7 @@ export default function LicensesPage() {
           OSSの一覧・ライセンス原文を開く
         </a>
         <p className="mt-3 text-muted-foreground">
-          Windows版にもライセンス文書を同梱しています。Electron・Chromium・同梱Node.jsの表記は、配布物内のLICENSE、LICENSES.chromium.html、resources/licensesなどから確認できます。
+          Windows版・Mac版にもライセンス文書を同梱しています。Electron・Chromium・同梱Node.jsの表記は、Windowsでは配布物内のLICENSE、LICENSES.chromium.html、resources/licenses、MacではRunMeter.app/Contents/Resources内の同名ファイルとlicensesから確認できます。
         </p>
       </section>
     </main>

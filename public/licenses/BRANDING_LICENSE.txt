@@ -9,7 +9,7 @@ RunMeterのロゴ、シンボル、ワードマーク、およびこれらから
 - `public/brand/` 内のロゴ・シンボル・アプリアイコン
 - `src/app/favicon.ico`、`src/app/icon.png`、`src/app/apple-icon.png`
 - `src/app/opengraph-image.png`、`src/app/twitter-image.png`
-- `desktop/assets/runmeter.png`、`desktop/assets/runmeter.ico`、`desktop/assets/runmeter-logo.svg`
+- `desktop/assets/runmeter.png`、`desktop/assets/runmeter.ico`、`desktop/assets/runmeter.icns`、`desktop/assets/runmeterTemplate.png`（Retina用の2倍サイズ版を含む）、`desktop/assets/runmeter-logo.svg`
 
 MITライセンスは、これらの素材を独立して再利用・改変・再配布する許諾や、RunMeterの名称・ロゴを他の製品・サービスのブランドとして使用する許諾を与えるものではありません。別途許諾を得ずに派生製品を公開する場合は、ブランド素材を独自のものに置き換えてください。公式製品であることや、当社による承認・提携があることを誤認させる表示はしないでください。
 

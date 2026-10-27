@@ -3,7 +3,9 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-const executable = resolve(process.argv[2] ?? "dist/bridge/node.exe");
+const executable = resolve(
+  process.argv[2] ?? (process.platform === "win32" ? "dist/bridge/node.exe" : "dist/bridge/node"),
+);
 const bridgeScript = resolve(process.argv[3] ?? "dist/bridge/index.js");
 const dataDirectory = mkdtempSync(join(tmpdir(), "runmeter-bridge-test-"));
 const child = spawn(executable, [bridgeScript, "--data-dir", dataDirectory], {

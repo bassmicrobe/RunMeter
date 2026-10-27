@@ -11,11 +11,13 @@
 
 Codex / Claude の使用率、次のリセット日時、トークン履歴を1画面で確認する、local-firstの利用メーターです。架空の利用データは表示しません。
 
+利用者向けの手順（インストール、ペアリング、接続、画面の見方、困ったとき）は[使い方マニュアル](https://run-meter.vercel.app/guide)にまとめています。ページの実装は`src/app/guide/page.tsx`で、画面左のメニューとフッターからも開けます。
+
 ## ロゴとアイコン
 
 ロゴのSVG原本は`public/brand/`にあります。READMEは明暗テーマに合わせてロゴを切り替え、アプリのサイドバーは折りたたむとシンボルだけを表示します。
 
-favicon・ホーム画面用アイコン・Windows用アイコンは、添付ロゴの正方形SVGから生成しています。更新時は次を実行します。
+favicon・ホーム画面用アイコン・Windows用アイコン（`.ico`）・Mac用アイコン（`.icns`）は、添付ロゴの正方形SVGから生成しています。Macのメニューバー用アイコン（`runmeterTemplate.png`と`@2x`）は、モノクロのシンボルから生成するテンプレート画像です。更新時は次を実行します。
 
 ```bash
 npm run brand:generate
@@ -26,7 +28,7 @@ npm run brand:generate
 - 本体コード：MIT。著作権・許諾文の保持など、[原文](LICENSE)の条件を確認してください。
 - ロゴ、シンボル、派生アイコン、共有画像：[ブランド素材の権利表記](BRANDING_LICENSE.md)に従います。公開する派生製品では、別途許諾がなければ独自のブランド素材へ置き換えてください。
 - 第三者OSSとGeist / Geist Monoフォント：[ライセンス原文と著作権表記](THIRD_PARTY_NOTICES.txt)を保持しています。MITを第三者の素材に一律に適用するものではありません。
-- Web画面のフッターから「ライセンス・OSS表記」を開けます。Windows配布物にも本体・ブランド・OSS・ランタイムの文書を同梱します。
+- Web画面のフッターから「ライセンス・OSS表記」を開けます。Windows・Macの配布物にも本体・ブランド・OSS・ランタイムの文書を同梱します。
 
 依存を更新した場合は、ライセンス文書を再生成して差分を確認します。
 
@@ -53,6 +55,25 @@ npm run licenses:check
 
 署名にはAzure Artifact Signingを使用します。日本法人の審査・GitHub OIDC設定・`npm run desktop:make:signed`の手順は[Windows署名ガイド](docs/WINDOWS_SIGNING.md)を参照してください。署名ビルド用の手動ワークフローは、最終成果物の検証後にActions artifactへ保存します。
 
+## Mac版
+
+Apple Silicon（arm64）向けのMac版を追加しました。配布用のプレビューはまだ公開していません。公開までは、Macでソースからビルドしたものを使用します。
+
+```bash
+npm run desktop:setup
+npm run desktop:make:mac
+```
+
+`desktop/out/make/zip/darwin/arm64/RunMeter-darwin-arm64-<版>.zip`が生成されます。ZIPを開き、`RunMeter.app`を「アプリケーション」フォルダーへ移動して起動します。ほかの場所から起動すると、移動するかを確認します。
+
+- 常駐アイコンはメニューバーに表示します。ウィンドウを閉じるとDockからも消え、メニューバーから再表示・ペアリングコード表示・終了ができます。
+- 初回起動時にログイン時の自動起動を有効にします（Windows版と同じ）。メニューバーの「ログイン時に起動」で切り替えられ、macOSの「ログイン項目」にも表示されます。
+- Developer ID署名とAppleの公証は未設定です。ビルドはアドホック署名のため、ダウンロードしたZIPから初回に開くときは「システム設定」→「プライバシーとセキュリティ」の「このまま開く」が必要です。
+- Finderやログイン項目から起動したアプリは、ターミナルのPATHを引き継ぎません。Codex CLIを見つけるため、起動時にログインシェルのPATHを読み取り、Homebrew・`~/.local/bin`・Volta・Codexデスクトップアプリ（`/Applications/Codex.app/Contents/Resources`）も探索先に加えます。
+- アンインストーラーはありません。削除する前に、アプリでClaudeの接続を解除してステータスラインを元へ戻してください。
+
+詳細は[Desktop版の説明](desktop/README.md)を参照してください。
+
 ## できること
 
 - サービスごとの使用率と残り割合を最上段に表示
@@ -67,6 +88,12 @@ npm run licenses:check
 
 - Windows 10/11（x64）
 - Codex連携：Codex CLI
+- Claude連携：Claude Code
+
+## Mac版の必要環境
+
+- macOS（Apple Silicon）。Intel Macは、Intel Macでビルドすれば同じ手順で作れますが未検証です
+- Codex連携：Codex CLIまたはCodexデスクトップアプリ
 - Claude連携：Claude Code
 
 ## 開発環境

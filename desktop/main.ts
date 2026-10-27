@@ -10,8 +10,10 @@ import {
   Tray,
   type MessageBoxOptions,
   type MessageBoxReturnValue,
+  type NativeImage,
 } from "electron";
 import {
+  chmodSync,
   copyFileSync,
   existsSync,
   mkdirSync,
@@ -19,6 +21,7 @@ import {
   renameSync,
   writeFileSync,
 } from "node:fs";
+import { homedir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -35,11 +38,16 @@ import {
   isTrustedAppUrl,
 } from "./navigation-policy.ts";
 import { restoreClaudeSettings, runInstallerStartup } from "./installer.ts";
+import { mergeMacPath, readLoginShellOutput } from "./shell-path.ts";
 
 const APP_USER_MODEL_ID = "com.squirrel.RunMeterDesktop.RunMeter";
 const HIDDEN_FLAG = "--hidden";
 const NO_AUTO_START_FLAG = "--no-auto-start";
 const BUNDLE_DIRECTORY = dirname(fileURLToPath(import.meta.url));
+const IS_MAC = process.platform === "darwin";
+// Where the resident icon lives, as users call it on each platform.
+const TRAY_AREA = IS_MAC ? "メニューバー" : "通知領域";
+const BRIDGE_NODE_NAME = process.platform === "win32" ? "node.exe" : "node";
 
 type RelayRuntime = ReturnType<typeof createDefaultRelay>;
 
@@ -52,6 +60,7 @@ let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 let relay: RelayRuntime | null = null;
 let quitting = false;
+let startHidden = process.argv.includes(HIDDEN_FLAG);
 let shutdownStarted = false;
 let shutdownComplete = false;
 
@@ -99,9 +108,10 @@ function installClaudeBridgeRuntime(dataDirectory: string): {
   ]) {
     copyFileSync(join(sourceDirectory, name), join(targetDirectory, name));
   }
-  const executablePath = join(targetDirectory, "node.exe");
+  const executablePath = join(targetDirectory, BRIDGE_NODE_NAME);
   if (!existsSync(executablePath)) {
-    copyFileSync(join(sourceDirectory, "node.exe"), executablePath);
+    copyFileSync(join(sourceDirectory, BRIDGE_NODE_NAME), executablePath);
+    if (process.platform !== "win32") chmodSync(executablePath, 0o755);
   }
   return {
     executablePath,
@@ -143,7 +153,14 @@ function loginLauncherPath(): string {
 }
 
 function applyOpenAtLogin(openAtLogin: boolean): void {
-  if (process.platform !== "win32" || !app.isPackaged) return;
+  if (!app.isPackaged) return;
+  if (IS_MAC) {
+    // macOS registers the app bundle itself; launch arguments are not passed,
+    // so a login launch is detected with wasOpenedAtLogin instead.
+    app.setLoginItemSettings({ openAtLogin });
+    return;
+  }
+  if (process.platform !== "win32") return;
   app.setLoginItemSettings({
     openAtLogin,
     path: loginLauncherPath(),
@@ -167,7 +184,7 @@ function configureOpenAtLogin(): void {
     return;
   }
   // Relay is useful only while running, so a fresh desktop install starts it
-  // silently with Windows. Users can disable this from the tray menu.
+  // silently at login. Users can disable this from the tray menu.
   setOpenAtLogin(true);
 }
 
@@ -229,6 +246,9 @@ async function showPairingCode(): Promise<void> {
 
 function showMainWindow(): void {
   if (!mainWindow) return;
+  // The Dock icon is shown only while the window is open, like other
+  // menu-bar apps; Relay keeps running from the menu bar.
+  if (IS_MAC) void app.dock?.show();
   if (mainWindow.isMinimized()) mainWindow.restore();
   mainWindow.show();
   mainWindow.focus();
@@ -256,7 +276,7 @@ function rebuildTrayMenu(): void {
       },
       { type: "separator" },
       {
-        label: "Windowsログイン時に起動",
+        label: IS_MAC ? "ログイン時に起動" : "Windowsログイン時に起動",
         type: "checkbox",
         enabled: app.isPackaged,
         checked: openAtLogin,
@@ -274,9 +294,20 @@ function rebuildTrayMenu(): void {
   );
 }
 
+function trayIcon(): NativeImage {
+  if (!IS_MAC) {
+    return nativeImage
+      .createFromPath(assetPath("runmeter.png"))
+      .resize({ width: 20, height: 20 });
+  }
+  // The @2x file next to it is loaded automatically for Retina displays.
+  const icon = nativeImage.createFromPath(assetPath("runmeterTemplate.png"));
+  icon.setTemplateImage(true);
+  return icon;
+}
+
 function createTray(): void {
-  const icon = nativeImage.createFromPath(assetPath("runmeter.png"));
-  tray = new Tray(icon.resize({ width: 20, height: 20 }));
+  tray = new Tray(trayIcon());
   tray.setToolTip("RunMeter");
   tray.on("click", showMainWindow);
   rebuildTrayMenu();
@@ -330,12 +361,13 @@ function createMainWindow(): BrowserWindow {
     if (quitting) return;
     event.preventDefault();
     window.hide();
+    if (IS_MAC) app.dock?.hide();
   });
   window.on("closed", () => {
     mainWindow = null;
   });
   window.once("ready-to-show", () => {
-    if (!process.argv.includes(HIDDEN_FLAG)) window.show();
+    if (!startHidden) window.show();
   });
 
   void loadMainPage(window);
@@ -358,7 +390,7 @@ async function loadMainPage(window: BrowserWindow): Promise<void> {
     await window.loadFile(assetPath("offline.html")).catch(() => {
       dialog.showErrorBox(
         "画面を読み込めませんでした",
-        "インターネット接続を確認し、通知領域メニューの「画面を再読み込み」を選んでください。",
+        `インターネット接続を確認し、${TRAY_AREA}のRunMeterメニューから「画面を再読み込み」を選んでください。`,
       );
     });
   }
@@ -421,7 +453,7 @@ async function stopRelay(): Promise<void> {
 }
 
 function scheduleFirstRunPairing(): void {
-  if (!relay || !mainWindow || process.argv.includes(HIDDEN_FLAG)) return;
+  if (!relay || !mainWindow || startHidden) return;
   const marker = join(relay.dataDirectory, "desktop-onboarding-v1");
   if (existsSync(marker)) return;
   const window = mainWindow;
@@ -437,13 +469,37 @@ function scheduleFirstRunPairing(): void {
   window.webContents.on("did-finish-load", showWhenReady);
 }
 
+// A Mac app opened from Downloads runs from a randomized read-only copy
+// (App Translocation), which would also break the login item. Returns true when
+// the app is relaunching from /Applications.
+function offerMoveToApplications(): boolean {
+  if (app.isInApplicationsFolder()) return false;
+  const response = dialog.showMessageBoxSync({
+    type: "question",
+    title: "RunMeter",
+    message: "RunMeterを「アプリケーション」フォルダーへ移動しますか？",
+    detail:
+      "ログイン時の自動起動とClaude連携を安定して使うため、アプリケーションフォルダーからの起動をおすすめします。移動後、RunMeterが再起動します。",
+    buttons: ["移動する", "今は移動しない"],
+    defaultId: 0,
+    cancelId: 1,
+  });
+  if (response !== 0) return false;
+  try {
+    return app.moveToApplicationsFolder();
+  } catch (error) {
+    dialog.showErrorBox("移動できませんでした", errorMessage(error));
+    return false;
+  }
+}
+
 async function runDesktop(): Promise<void> {
   if (!app.requestSingleInstanceLock()) {
     app.quit();
     return;
   }
 
-  app.setAppUserModelId(APP_USER_MODEL_ID);
+  if (process.platform === "win32") app.setAppUserModelId(APP_USER_MODEL_ID);
   app.on("second-instance", showMainWindow);
   app.on("before-quit", () => {
     quitting = true;
@@ -452,7 +508,21 @@ async function runDesktop(): Promise<void> {
     // Keep Relay available from the notification area.
   });
 
+  const shellOutput =
+    IS_MAC && app.isPackaged
+      ? readLoginShellOutput(process.env.SHELL)
+      : Promise.resolve(null);
   await app.whenReady();
+  if (IS_MAC && app.isPackaged) {
+    if (offerMoveToApplications()) return;
+    process.env.PATH = mergeMacPath({
+      currentPath: process.env.PATH,
+      shellOutput: await shellOutput,
+      home: homedir(),
+    });
+    if (app.getLoginItemSettings().wasOpenedAtLogin) startHidden = true;
+  }
+  if (IS_MAC && startHidden) app.dock?.hide();
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback, details) =>
       callback(

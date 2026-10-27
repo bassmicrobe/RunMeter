@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Codex・Claudeの利用率、リセット日時、トークン履歴を端末内で確認するWeb／Windows向けダッシュボード。AI認証情報・利用データのクラウド保存なし。",
+  "description": "Codex・Claudeの利用率、リセット日時、トークン履歴を端末内で確認するWeb／Windows・Mac向けダッシュボード。AI認証情報・利用データのクラウド保存なし。",
   "type": "module",
   "author": {
     "name": "サイバーアイ・テクノロジー株式会社",
@@ -20,6 +20,8 @@
     "desktop:start": "npm --prefix desktop run start",
     "desktop:package": "npm --prefix desktop run package",
     "desktop:make": "npm --prefix desktop run make",
+    "desktop:package:mac": "npm --prefix desktop run package:mac",
+    "desktop:make:mac": "npm --prefix desktop run make:mac",
     "desktop:make:signed": "npm --prefix desktop run make:signed",
     "test": "npm run test:relay",
     "test:relay": "npm --prefix relay test",

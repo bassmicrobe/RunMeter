@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
+  BookOpen,
   Gauge,
   HardDrive,
   Info,
@@ -33,6 +34,7 @@ const navigation = [
   { label: "利用率とリセット", href: "#usage", icon: Gauge },
   { label: "接続について", href: "#connection-status", icon: Info },
   { label: "設定", href: "#settings", icon: Settings2 },
+  { label: "使い方マニュアル", href: "/guide", icon: BookOpen },
 ] as const;
 
 export function AppSidebar({
