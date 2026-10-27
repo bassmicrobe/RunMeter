@@ -7,9 +7,13 @@ import { extractFile, listPackage } from "@electron/asar";
 import { nativeInstallerDocuments } from "./native-installer-licenses.mjs";
 
 const desktop = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const packaged = resolve(process.argv[2] ?? join(desktop, "out", "RunMeter-win32-x64"));
-const directory = join(packaged, "resources", "licenses");
-const native = nativeInstallerDocuments(join(directory, "native-installer"));
+const isMac = process.platform === "darwin";
+const packaged = resolve(process.argv[2] ?? join(desktop, "out", isMac ? `RunMeter-darwin-${process.arch}` : "RunMeter-win32-x64"));
+// On macOS everything the user receives is inside the zipped RunMeter.app.
+const appRoot = isMac ? join(packaged, "RunMeter.app", "Contents", "Resources") : packaged;
+const resources = isMac ? appRoot : join(packaged, "resources");
+const directory = join(resources, "licenses");
+const native = isMac ? null : nativeInstallerDocuments(join(directory, "native-installer"));
 const required = [
   "LICENSE", "BRANDING_LICENSE.md", "THIRD_PARTY_NOTICES.txt",
   "DESKTOP-THIRD-PARTY-LICENSES.txt", "NODE-LICENSE.txt", "README.txt",
@@ -20,8 +24,8 @@ for (const name of required) {
   assert.ok(existsSync(path), `Packaged license is missing: ${name}`);
   assert.ok(readFileSync(path, "utf8").trim(), `Packaged license is empty: ${name}`);
 }
-for (const name of ["LICENSE", "LICENSES.chromium.html", "resources/bridge/NODE-LICENSE.txt"]) {
-  const path = join(packaged, name);
+for (const path of [join(appRoot, "LICENSE"), join(appRoot, "LICENSES.chromium.html"), join(resources, "bridge", "NODE-LICENSE.txt")]) {
+  const name = path.slice(packaged.length + 1);
   assert.ok(existsSync(path), `Bundled runtime license is missing: ${name}`);
   assert.ok(readFileSync(path, "utf8").trim(), `Bundled runtime license is empty: ${name}`);
 }
@@ -37,9 +41,9 @@ for (const pkg of packages) {
 }
 assert.equal(
   readFileSync(join(directory, "NODE-LICENSE.txt"), "utf8"),
-  readFileSync(join(packaged, "resources", "bridge", "NODE-LICENSE.txt"), "utf8"),
+  readFileSync(join(resources, "bridge", "NODE-LICENSE.txt"), "utf8"),
 );
-const bridgeNotice = join(packaged, "resources", "bridge", "THIRD_PARTY_LICENSES.txt");
+const bridgeNotice = join(resources, "bridge", "THIRD_PARTY_LICENSES.txt");
 if (existsSync(bridgeNotice) && readFileSync(bridgeNotice, "utf8").trim()) {
   assert.equal(
     readFileSync(join(directory, "BRIDGE-THIRD-PARTY-LICENSES.txt"), "utf8"),
@@ -47,7 +51,7 @@ if (existsSync(bridgeNotice) && readFileSync(bridgeNotice, "utf8").trim()) {
     "Bridge notice differs from its accessible copy",
   );
 }
-const archive = join(packaged, "resources", "app.asar");
+const archive = join(resources, "app.asar");
 const files = listPackage(archive).map(file => file.replaceAll("\\", "/"));
 assert.ok(files.includes("/dist/main/THIRD_PARTY_LICENSES.txt"), "ncc notice is missing from app.asar");
 assert.ok(!files.some(file => file.startsWith("/dist/licenses/")), "License resources should be accessible outside app.asar");
@@ -61,4 +65,4 @@ assert.equal(
   0,
   "Packaged ncc notice differs from its accessible copy",
 );
-console.log(JSON.stringify({ passed: true, projectDocuments: required.length, desktopRuntimePackages: packages.length, nativeInstallerDocuments: native.documentCount, electronAndChromiumNotices: true, nodeNotice: true, asarNotice: true }));
+console.log(JSON.stringify({ passed: true, projectDocuments: required.length, desktopRuntimePackages: packages.length, nativeInstallerDocuments: native?.documentCount ?? 0, electronAndChromiumNotices: true, nodeNotice: true, asarNotice: true }));
